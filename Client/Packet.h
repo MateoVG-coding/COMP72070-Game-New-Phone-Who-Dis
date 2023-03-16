@@ -28,6 +28,27 @@ private:
 
 public:
 
+	Packet()
+	{
+		// head
+		head.sourceID = 0;
+		head.destinationID = 0;
+		head.sequenceNumber = 0;
+		head.ackFlag = false;
+		head.errFlag = false;
+		head.finFlag = false;
+		head.bodyLength = 0;
+		
+		// body
+		body.response = nullptr;
+		body.username = nullptr;
+
+		// tail
+		crc = 0;
+
+		pSerialBuf = nullptr;
+	}
+
 	void setDestination(char value)
 	{
 		head.destinationID = value;
@@ -82,5 +103,68 @@ public:
 		
 	}
 
+	char getDestination()
+	{
+		return head.destinationID;
+	}
+
+	char getSource()
+	{
+		return head.sourceID;
+	}
+
+	int getSeqNumber()
+	{
+		return head.sequenceNumber;
+	}
+
+	bool getAckFlag()
+	{
+		return head.ackFlag;
+	}
+
+	bool getFinFlag()
+	{
+		return head.finFlag;
+	}
+
+	bool getErrFlag()
+	{
+		return head.errFlag;
+	}
+
+	int getLength()
+	{
+		return head.bodyLength;
+	}
+	
+	char* getUser()
+	{
+		return body.username;
+	}
+
+	char* getResponse()
+	{
+		return body.response;
+	}
+
+	int getCRC()
+	{
+		return crc;
+	}
+
+	char* serializeData()
+	{
+		int size = sizeof(head) + head.bodyLength + sizeof(crc);
+
+		pSerialBuf = new char[size];
+
+		memcpy(pSerialBuf, &head, sizeof(head));
+		memcpy(pSerialBuf + sizeof(head), body.username, sizeof(body.username));
+		memcpy(pSerialBuf + sizeof(head) + sizeof(body.username), body.response, sizeof(body.response));
+		memcpy(pSerialBuf + sizeof(head) + head.bodyLength, &crc, sizeof(crc));
+
+		return pSerialBuf;
+	}
 
 };
