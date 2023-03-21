@@ -100,14 +100,32 @@ public:
 		HEAD.dataLength = value;
 	}
 
-	void set_Username(char* username)
+	void set_Username(char* username, int size)
 	{
+		if (BODY.username)
+			delete[] BODY.username;
 
+		HEAD.usernameLength = size;
+
+		BODY.username = new char[size + 1];
+
+		BODY.username[size] = '\0';
+
+		memcpy(BODY.username, username, size);
 	}
 
-	void set_Data(char* data)
+	void set_Data(char* data, int size)
 	{
+		if (BODY.data)
+			delete[] BODY.data;
 
+		HEAD.dataLength = size;
+
+		BODY.data = new char[size + 1];
+
+		BODY.data[size] = '\0';
+
+		memcpy(BODY.data, data, size);
 	}
 
 	void set_CRC()
