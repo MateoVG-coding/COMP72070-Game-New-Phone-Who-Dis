@@ -14,155 +14,135 @@ private:
 		bool ackFlag : 1;
 		bool errFlag : 1;
 		bool finFlag : 1;
-		unsigned int bodyLength;
-	}head;
+		unsigned int usernameLength;
+		unsigned int dataLength;
+	}HEAD;
 
 	struct Body
 	{
 		char* username;
-		char* response;
-	}body;
+		char* data;
+	}BODY;
 
 	char* pSerialBuf;
-	unsigned int crc;
+	unsigned int CRC;
 
 public:
 
-	Packet()
+	Packet() : pSerialBuf(nullptr) { memset(&HEAD, 0, sizeof(HEAD)); memset(&BODY, 0, sizeof(BODY)); };
+
+	void set_Destination(char value)
 	{
-		// head
-		head.sourceID = 0;
-		head.destinationID = 0;
-		head.sequenceNumber = 0;
-		head.ackFlag = false;
-		head.errFlag = false;
-		head.finFlag = false;
-		head.bodyLength = 0;
-		
-		// body
-		body.response = nullptr;
-		body.username = nullptr;
-
-		// tail
-		crc = 0;
-
-		pSerialBuf = nullptr;
+		HEAD.destinationID = value;
 	}
 
-	void setDestination(char value)
+	void set_Source(char value)
 	{
-		head.destinationID = value;
+		HEAD.sourceID = value;
 	}
 
-	void setSource(char value)
+	void set_SeqNumber(int value)
 	{
-		head.sourceID = value;
+		HEAD.sequenceNumber = value;
 	}
 
-	void setSeqNumber(int value)
+	void set_AckFlag(bool value)
 	{
-		head.sequenceNumber = value;
+		HEAD.ackFlag = value;
 	}
 
-	void setAckFlag(bool value)
+	void set_FinFlag(bool value)
 	{
-		head.ackFlag = value;
+		HEAD.finFlag = value;
 	}
 
-	void setFinFlag(bool value)
+	void set_ErrFlag(bool value)
 	{
-		head.finFlag = value;
+		HEAD.errFlag = value;
 	}
 
-	void setErrFlag(bool value)
+	void set_UsernameLength(int value)
 	{
-		head.errFlag = value;
+		HEAD.usernameLength = value;
 	}
 
-	void setLength(int value)
+	void set_DataLength(int value)
 	{
-		head.bodyLength = value;
+		HEAD.dataLength = value;
 	}
 
-	void setUser(char* user)
-	{
-		body.username = new char[sizeof(user)];
-		memcpy(body.username, user, sizeof(user));
-		head.bodyLength += sizeof(user);
-	}
-
-	void setData(char* data)
-	{
-		body.response = new char[sizeof(data)];
-		memcpy(body.response, data, sizeof(data));
-		head.bodyLength += sizeof(data);
-	}
-
-	void setCRC()
+	void set_Username(char* username)
 	{
 		
 	}
 
-	char getDestination()
+	void set_Data(char* data)
 	{
-		return head.destinationID;
+
 	}
 
-	char getSource()
+	void set_CRC()
 	{
-		return head.sourceID;
+		CRC = 0xF500FF75;
 	}
 
-	int getSeqNumber()
+	char get_Destination()
 	{
-		return head.sequenceNumber;
+		return HEAD.destinationID;
 	}
 
-	bool getAckFlag()
+	char get_Source()
 	{
-		return head.ackFlag;
+		return HEAD.sourceID;
 	}
 
-	bool getFinFlag()
+	int get_SeqNumber()
 	{
-		return head.finFlag;
+		return HEAD.sequenceNumber;
 	}
 
-	bool getErrFlag()
+	bool get_AckFlag()
 	{
-		return head.errFlag;
+		return HEAD.ackFlag;
 	}
 
-	int getLength()
+	bool get_FinFlag()
 	{
-		return head.bodyLength;
+		return HEAD.finFlag;
+	}
+
+	bool get_ErrFlag()
+	{
+		return HEAD.errFlag;
+	}
+
+	int get_UsernameLength()
+	{
+		return HEAD.usernameLength;
+	}
+
+	int get_DataLength()
+	{
+		return HEAD.dataLength;
 	}
 	
-	char* getUser()
+	char* get_User()
 	{
-		return body.username;
+		return BODY.username;
 	}
 
-	char* getResponse()
+	char* get_Data()
 	{
-		return body.response;
+		return BODY.data;
 	}
 
-	int getCRC()
+	int get_CRC()
 	{
-		return crc;
+		return CRC;
 	}
 
 	char* serializeData()
 	{
-		int size = sizeof(head) + head.bodyLength + sizeof(crc);
-
-		pSerialBuf = new char[size];
-
-		memcpy(pSerialBuf, &head, sizeof(head));
-		memcpy(pSerialBuf + sizeof(head), body.username, sizeof(body.username));
-		memcpy(pSerialBuf + sizeof(head) + sizeof(body.username), body.response, sizeof(body.response));
-		memcpy(pSerialBuf + sizeof(head) + head.bodyLength, &crc, sizeof(crc));
 
 		return pSerialBuf;
 	}
