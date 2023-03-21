@@ -190,6 +190,23 @@ public:
 
 	char* serializeData()
 	{
+		if (HEAD.usernameLength == 0 && HEAD.dataLength == 0)
+		{
+			strcpy(pSerialBuf, "empty");
+			return pSerialBuf;
+		}
+
+		int size = sizeof(HEAD) + HEAD.dataLength + HEAD.usernameLength + sizeof(CRC);
+
+		pSerialBuf = new char[size];
+
+		memcpy(pSerialBuf, &HEAD, sizeof(HEAD));
+
+		memcpy(pSerialBuf + sizeof(HEAD), BODY.username, HEAD.usernameLength);
+
+		memcpy(pSerialBuf + sizeof(HEAD) + HEAD.usernameLength, BODY.data, HEAD.dataLength);
+
+		memcpy(pSerialBuf + sizeof(HEAD) + HEAD.usernameLength + HEAD.dataLength, &CRC, sizeof(CRC));
 
 		return pSerialBuf;
 	}
