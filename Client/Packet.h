@@ -31,6 +31,35 @@ public:
 
 	Packet() : pSerialBuf(nullptr) { memset(&HEAD, 0, sizeof(HEAD)); memset(&BODY, 0, sizeof(BODY)); };
 
+	Packet(char* src)
+	{
+		memcpy(&HEAD, src, sizeof(Header));
+
+		//Username
+
+		int usernameSize = HEAD.usernameLength;
+
+		BODY.username = new char[usernameSize + 1];
+
+		BODY.username[usernameSize] = '\0';
+
+		//Data
+
+		int dataSize = HEAD.dataLength;
+
+		BODY.data = new char[dataSize + 1];
+
+		BODY.data[dataSize] = '\0';
+
+		memcpy(BODY.username, src + sizeof(Header), usernameSize);
+
+		memcpy(BODY.data, src + sizeof(Header) + usernameSize, dataSize);
+
+		int bodySize = usernameSize + dataSize;
+
+		memcpy(&CRC, src + sizeof(Header) + bodySize, sizeof(unsigned int));
+	}
+
 	void set_Destination(char value)
 	{
 		HEAD.destinationID = value;
@@ -73,7 +102,7 @@ public:
 
 	void set_Username(char* username)
 	{
-		
+
 	}
 
 	void set_Data(char* data)
@@ -125,7 +154,7 @@ public:
 	{
 		return HEAD.dataLength;
 	}
-	
+
 	char* get_User()
 	{
 		return BODY.username;
