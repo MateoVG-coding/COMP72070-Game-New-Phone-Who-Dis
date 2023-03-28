@@ -1,5 +1,6 @@
 #include <windows.networking.sockets.h>
 #include "../Client/Packet.h"
+#include "CredentialsFile.h"
 
 #include <iostream>
 #include <thread>
@@ -22,6 +23,7 @@ void clientHandler(SOCKET clientSocket) {
 
 int main(int argc, char* argv[])
 {
+
     // starts Winsock DLLs
     WSADATA wsaData;
     if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
