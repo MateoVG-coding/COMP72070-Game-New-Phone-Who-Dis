@@ -2,6 +2,8 @@
 #include <ctime>
 #include <iostream>
 
+const int EmptyPktSize = 31;  // Number of bytes in a packet with no data field
+
 class Packet {
 
 private:
@@ -24,8 +26,10 @@ private:
 		char* data;
 	}BODY;
 
-	char* pSerialBuf;
 	unsigned int CRC;
+
+
+	char* pSerialBuf;
 
 public:
 
@@ -188,17 +192,16 @@ public:
 		return CRC;
 	}
 
-	char* serializeData()
+	char* serializeData(int& TotalSize)
 	{
-		if (HEAD.usernameLength == 0 && HEAD.dataLength == 0)
+		if (pSerialBuf)
 		{
-			strcpy(pSerialBuf, "empty");
-			return pSerialBuf;
+			delete[] pSerialBuf;
 		}
 
-		int size = sizeof(HEAD) + HEAD.dataLength + HEAD.usernameLength + sizeof(CRC);
+		TotalSize = EmptyPktSize + HEAD.dataLength + HEAD.usernameLength;
 
-		pSerialBuf = new char[size];
+		pSerialBuf = new char[TotalSize];
 
 		memcpy(pSerialBuf, &HEAD, sizeof(HEAD));
 
