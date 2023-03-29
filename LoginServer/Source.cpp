@@ -98,9 +98,9 @@ void sendPacketToClient(Packet RxPkt, SOCKET clientSocket)
     send(clientSocket, Tx, Size, 0);
 }
 
-void clientHandler(SOCKET clientSocket) {
+        string username(RxPkt.get_User()));
 
-    //Function to send and recv packets from any client side.
+        string password(RxPkt.get_Data());
 
     char RxBuffer[128];
     int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
