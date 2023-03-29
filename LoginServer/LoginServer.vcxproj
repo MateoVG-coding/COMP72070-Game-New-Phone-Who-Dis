@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="..\Client\Packet.h" />
     <ClInclude Include="CredentialsFile.h" />
+    <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CredentialsFile.cpp" />
