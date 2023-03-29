@@ -98,3 +98,26 @@ bool checkCredentials(string username, string password, string filename)
 
     return false; 
 }
+bool checkCredentials(string username, string password, string filename) 
+{
+    ifstream inFile(filename);
+
+    string line;
+
+    while (getline(inFile, line)) 
+    { 
+        size_t pos = line.find(":"); 
+        string fileUsername = line.substr(0, pos); 
+        string filePassword = line.substr(pos + 1);
+
+        if (username == fileUsername && password == filePassword) //check for username and password
+        { 
+            inFile.close(); 
+            return true; 
+        }
+    }
+
+    inFile.close(); 
+
+    return false; 
+}
