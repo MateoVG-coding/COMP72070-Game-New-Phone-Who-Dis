@@ -11,7 +11,7 @@ void clientHandler(SOCKET clientSocket) {
 
         Packet RxPkt(RxBuffer);
 
-        string username(RxPkt.get_User()));
+        string username(RxPkt.get_User());
 
         string password(RxPkt.get_Data());
 
@@ -24,6 +24,13 @@ void clientHandler(SOCKET clientSocket) {
             addCredentials(username, password, "credentials.txt");
         }
 
+        Packet TxPkt;
+        TxPkt.set_AckFlag(true);
+
+        int Size = 0;
+        char* Tx = TxPkt.serializeData(Size);
+
+        send(clientSocket, Tx, Size, 0);
     }
 
     // close client socket
