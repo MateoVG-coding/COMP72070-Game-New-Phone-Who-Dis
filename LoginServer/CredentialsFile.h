@@ -7,6 +7,7 @@
 
 using namespace std;
 
-void addCredentials(string, string, string);
-void createCredentialsFile(string);
-void deleteCredentialsFile(string);
+void addCredentials(string username, string password, string filename);
+void createCredentialsFile(string filename);
+void deleteCredentialsFile(string filename);
+bool checkCredentials(string username, string password, string filename);
