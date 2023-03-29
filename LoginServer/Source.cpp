@@ -1,21 +1,30 @@
-#include <windows.networking.sockets.h>
-#include "../Client/Packet.h"
-#include "CredentialsFile.h"
-
-#include <iostream>
-#include <thread>
-#include <vector>
-
-#pragma comment(lib, "Ws2_32.lib")
-
-using namespace std;
+#include "Source.h"
 
 void clientHandler(SOCKET clientSocket) {
 
     //Function to send and recv packets from any client side.
 
-    char buffer[128];
+    char RxBuffer[128];
+    int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
 
+    if (bytesReceived > 0) {
+
+        Packet RxPkt(RxBuffer);
+
+        string username(RxPkt.get_User()));
+
+        string password(RxPkt.get_Data());
+
+        if (username.find("login") != std::string::npos)
+        {
+            checkCredentials(username, password, "credentials.txt");
+        }
+        else
+        {
+            addCredentials(username, password, "credentials.txt");
+        }
+
+    }
 
     // close client socket
     closesocket(clientSocket);
