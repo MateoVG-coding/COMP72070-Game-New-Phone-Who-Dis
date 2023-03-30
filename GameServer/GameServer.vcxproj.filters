@@ -18,9 +18,18 @@
     <ClInclude Include="..\Client\Packet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Replies.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Replies.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
