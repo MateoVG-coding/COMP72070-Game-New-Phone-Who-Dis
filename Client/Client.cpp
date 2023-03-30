@@ -2,7 +2,16 @@
 #pragma comment(lib, "Ws2_32.lib")
 #include "Packet.h"
 #include <iostream>
+
+#define BUFF_LEN 512
+
 using namespace std;
+
+void SetPacketData(Packet pkt, char *username, char *data)
+{
+	pkt.set_Username(username); // Add the username to the packet
+	pkt.set_Data(data); // Add the data to the packet
+}
 
 int main()
 {
@@ -31,28 +40,30 @@ int main()
 		return 0;
 	}
 
-	//The judge will be picked out once the game 
-	//is started by a random function which will 
-	//pick a socket connected a player at random 
-	//and that selected socket will be judge.
-
 	bool bDone = false;
 	while (!bDone) {
 
-		/* 
-		char TxBuffer[128] = {};
-		cout << "Enter a String to transmit" << endl;
-		cin >> TxBuffer;
+		// Recieving responses from the server
+		char RxBuffer[BUFF_LEN];
+		recv(ClientSocket, RxBuffer, sizeof(RxBuffer), 0);
+		Packet RxPkt(RxBuffer);
+
+		
+		//Sending packet
+		Packet TxPkt;
+		int size = 0;
+		char* TxBuffer = TxPkt.serializeData(size);
+		
 		send(ClientSocket, TxBuffer, sizeof(TxBuffer), 0);
 
-		char RxBuffer[128];
-		recv(ClientSocket, RxBuffer, sizeof(RxBuffer), 0);
-		cout << "Rx: " << RxBuffer << endl;
-
-		if ((strcmp(TxBuffer, "quit") == 0) || (strcmp(TxBuffer, "bye") == 0))
+		// Exit keywords
+		if ((strcmp(TxBuffer, "EXIT") == 0) || (strcmp(TxBuffer, "exit") == 0))
 			bDone = true;
-		*/
-		
+
+		if ((strcmp(TxBuffer, "QUIT") == 0) || (strcmp(TxBuffer, "quit") == 0))
+			bDone = true;
+
+
 	}
 	//closes connection and socket
 	closesocket(ClientSocket);
@@ -62,3 +73,4 @@ int main()
 
 	return 1;
 }
+
