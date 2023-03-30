@@ -7,12 +7,6 @@
 
 using namespace std;
 
-void SetPacketData(Packet pkt, char *username, char *data)
-{
-	pkt.set_Username(username); // Add the username to the packet
-	pkt.set_Data(data); // Add the data to the packet
-}
-
 int main()
 {
 	//starts Winsock DLLs
