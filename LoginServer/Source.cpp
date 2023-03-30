@@ -1,7 +1,8 @@
 #include "Source.h"
 
-
-int sendPacketToServer(Packet TxPkt) {
+int sendPacketToServer(Packet TxPkt) 
+{
+    //This function checks if the user is already connected to the game server
 
     // start Winsock DLLs
     WSADATA wsaData;
@@ -28,7 +29,6 @@ int sendPacketToServer(Packet TxPkt) {
         return;
     }
 
-    // send packet
     int Size = 0;
     char* Tx = TxPkt.serializeData(Size);
 
@@ -47,7 +47,7 @@ int sendPacketToServer(Packet TxPkt) {
         // free Winsock DLL resources
         WSACleanup();
 
-        if (RxPkt.get_ErrFlag() == false)
+        if (RxPkt.get_ErrFlag() == false) //The user is already connected to the game server
         {
             return 1;
         }
@@ -56,6 +56,44 @@ int sendPacketToServer(Packet TxPkt) {
             return 0;
         }
     }
+}
+
+void sendPacketToClient(Packet RxPkt, SOCKET clientSocket)
+{
+    Packet TxPkt;
+    TxPkt.set_AckFlag(true);
+    string username(RxPkt.get_User());
+    string password(RxPkt.get_Data());
+
+    if (username.find("login") != std::string::npos) //Check if the client wants to login or signup
+    {
+        Packet GameServerPkt;
+
+        char username_LoginServer[] = "LOGIN_SERVER";
+
+        GameServerPkt.set_Username(username_LoginServer, sizeof(username_LoginServer) / sizeof(username_LoginServer[0]));
+
+        GameServerPkt.set_Data(RxPkt.get_User(), RxPkt.get_UsernameLength());
+
+        if (checkCredentials(username, password, "credentials.txt") && sendPacketToServer(GameServerPkt)) //Login information is correct and the user is not already connected to the server
+        {
+            TxPkt.set_ErrFlag(false);
+        }
+        else
+        {
+            TxPkt.set_ErrFlag(true);
+        }
+    }
+    else
+    {
+        addCredentials(username, password, "credentials.txt");
+        TxPkt.set_ErrFlag(false);
+    }
+
+    int Size = 0;
+    char* Tx = TxPkt.serializeData(Size);
+
+    send(clientSocket, Tx, Size, 0);
 }
 
 void clientHandler(SOCKET clientSocket) {
@@ -67,51 +105,9 @@ void clientHandler(SOCKET clientSocket) {
 
     if (bytesReceived > 0)
     {
-
         Packet RxPkt(RxBuffer);
 
-        string username(RxPkt.get_User());
-
-        string password(RxPkt.get_Data());
-
-        if (username.find("login") != std::string::npos)
-        {
-            checkCredentials(username, password, "credentials.txt");
-        }
-        else
-        {
-            addCredentials(username, password, "credentials.txt");
-        }
-
-        Packet GameServerPkt;
-
-        char username_LoginServer[] = "LOGIN_SERVER";
-
-        GameServerPkt.set_Username(username_LoginServer, sizeof(username_LoginServer) / sizeof(username_LoginServer[0]));
-
-        GameServerPkt.set_Data(RxPkt.get_User(), RxPkt.get_UsernameLength());
-
-        if (sendPacketToServer(GameServerPkt) == 1)
-        {
-            Packet TxPkt;
-            TxPkt.set_AckFlag(true);
-
-            int Size = 0;
-            char* Tx = TxPkt.serializeData(Size);
-
-            send(clientSocket, Tx, Size, 0);
-        }
-        else
-        {
-            Packet TxPkt;
-            TxPkt.set_AckFlag(true);
-            TxPkt.set_ErrFlag(true);
-
-            int Size = 0;
-            char* Tx = TxPkt.serializeData(Size);
-
-            send(clientSocket, Tx, Size, 0);
-        }
+        sendPacketToClient(RxPkt, clientSocket);
     }
 
     // close client socket
@@ -157,7 +153,6 @@ int main(int argc, char* argv[])
 
     while (true)
     {
-
         // accept incoming connection
         SOCKET clientSocket;
         sockaddr_in clientAddr;
@@ -170,7 +165,6 @@ int main(int argc, char* argv[])
 
         thread t(clientHandler, clientSocket);
         clientThreads.push_back(move(t));
-
     }
 
     for (auto& t : clientThreads) {
