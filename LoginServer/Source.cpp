@@ -1,5 +1,63 @@
 #include "Source.h"
 
+
+int sendPacketToServer(Packet TxPkt) {
+
+    // start Winsock DLLs
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        return;
+    }
+
+    // create client socket 
+    SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (clientSocket == INVALID_SOCKET) {
+        WSACleanup();
+        return;
+    }
+
+    // connect to game server
+    sockaddr_in serverAddr;
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(27001); 
+    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.2"); 
+
+    if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
+        closesocket(clientSocket);
+        WSACleanup();
+        return;
+    }
+
+    // send packet
+    int Size = 0;
+    char* Tx = TxPkt.serializeData(Size);
+
+    send(clientSocket, Tx, Size, 0);
+
+    char RxBuffer[128];
+    int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+
+    if (bytesReceived > 0) 
+    {
+        Packet RxPkt(RxBuffer);
+
+        // close client socket
+        closesocket(clientSocket);
+
+        // free Winsock DLL resources
+        WSACleanup();
+
+        if (RxPkt.get_ErrFlag() == false)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
+
 void clientHandler(SOCKET clientSocket) {
 
     //Function to send and recv packets from any client side.
@@ -7,7 +65,8 @@ void clientHandler(SOCKET clientSocket) {
     char RxBuffer[128];
     int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
 
-    if (bytesReceived > 0) {
+    if (bytesReceived > 0)
+    {
 
         Packet RxPkt(RxBuffer);
 
@@ -24,13 +83,35 @@ void clientHandler(SOCKET clientSocket) {
             addCredentials(username, password, "credentials.txt");
         }
 
-        Packet TxPkt;
-        TxPkt.set_AckFlag(true);
+        Packet GameServerPkt;
 
-        int Size = 0;
-        char* Tx = TxPkt.serializeData(Size);
+        char username_LoginServer[] = "LOGIN_SERVER";
 
-        send(clientSocket, Tx, Size, 0);
+        GameServerPkt.set_Username(username_LoginServer, sizeof(username_LoginServer) / sizeof(username_LoginServer[0]));
+
+        GameServerPkt.set_Data(RxPkt.get_User(), RxPkt.get_UsernameLength());
+
+        if (sendPacketToServer(GameServerPkt) == 1)
+        {
+            Packet TxPkt;
+            TxPkt.set_AckFlag(true);
+
+            int Size = 0;
+            char* Tx = TxPkt.serializeData(Size);
+
+            send(clientSocket, Tx, Size, 0);
+        }
+        else
+        {
+            Packet TxPkt;
+            TxPkt.set_AckFlag(true);
+            TxPkt.set_ErrFlag(true);
+
+            int Size = 0;
+            char* Tx = TxPkt.serializeData(Size);
+
+            send(clientSocket, Tx, Size, 0);
+        }
     }
 
     // close client socket
