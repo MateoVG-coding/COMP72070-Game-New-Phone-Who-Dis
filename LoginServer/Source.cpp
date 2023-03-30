@@ -155,7 +155,6 @@ int main(int argc, char* argv[])
 
     while (true)
     {
-
         // accept incoming connection
         SOCKET clientSocket;
         sockaddr_in clientAddr;
@@ -168,7 +167,6 @@ int main(int argc, char* argv[])
 
         thread t(clientHandler, clientSocket);
         clientThreads.push_back(move(t));
-
     }
 
     for (auto& t : clientThreads) {
