@@ -1,86 +1,105 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <windows.networking.sockets.h>
-#pragma comment(lib, "Ws2_32.lib")
-#include <iostream>
-using namespace std;
+#include "GameServer.h"
+atomic<int> numClients(0);
 
-int main()
+void clientHandler(SOCKET clientSocket) {
+
+    //Function to send and recv packets from any client side.
+
+    numClients++;
+
+    char RxBuffer[128];
+    int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+
+    if (bytesReceived > 0) {
+        // Needs to figure out how to implement it
+
+        Packet RxPkt(RxBuffer);
+
+        if (checkFileFull(numClients) == true)
+        {
+            emptyFile();
+        }
+
+        addReply(RxPkt);
+
+        Packet TxPkt;
+        TxPkt.set_AckFlag(true);
+
+        int Size = 0;
+        char* Tx = TxPkt.serializeData(Size);
+
+        send(clientSocket, Tx, Size, 0);
+    }
+
+    // close client socket
+    closesocket(clientSocket);
+
+    numClients--;
+}
+
+int main(int argc, char* argv[])
 {
-	//starts Winsock DLLs		
-	WSADATA wsaData;
-	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
-		return 0;
 
-	//create server socket
-	SOCKET ServerSocket_LogInServer;
-	ServerSocket_LogInServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (ServerSocket_LogInServer == INVALID_SOCKET) {
-		WSACleanup();
-		return 0;
-	}
+    // starts Winsock DLLs
+    WSADATA wsaData;
+    if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
+        return 0;
+    }
 
-	sockaddr_in SvrAddr_LogInServer;
-	SvrAddr_LogInServer.sin_family = AF_INET;
-	SvrAddr_LogInServer.sin_addr.s_addr = INADDR_ANY;
-	SvrAddr_LogInServer.sin_port = htons(8082);
-	if (bind(ServerSocket_LogInServer, (struct sockaddr*)&SvrAddr_LogInServer, sizeof(SvrAddr_LogInServer)) == SOCKET_ERROR)
-	{
-		closesocket(ServerSocket_LogInServer);
-		WSACleanup();
-		return 0;
-	}
+    // create server socket
+    SOCKET ServerSocket;
+    ServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (ServerSocket == INVALID_SOCKET) {
+        WSACleanup();
+        return 0;
+    }
 
-	if (listen(ServerSocket_LogInServer, 1) == SOCKET_ERROR) {
-		closesocket(ServerSocket_LogInServer);
-		WSACleanup();
-		return 0;
-	}
+    // binds socket to address
+    sockaddr_in localAddr;
+    localAddr.sin_family = AF_INET;
+    localAddr.sin_port = htons(27000);
+    localAddr.sin_addr.s_addr = INADDR_ANY;
+    if (bind(ServerSocket, (struct sockaddr*)&localAddr, sizeof(localAddr)) == SOCKET_ERROR) {
+        closesocket(ServerSocket);
+        WSACleanup();
+        return 0;
+    }
 
-	//accepts a connection from a client
-	SOCKET ConnectionSocket_LogInServer;
-	ConnectionSocket_LogInServer = SOCKET_ERROR;
-	if ((ConnectionSocket_LogInServer = accept(ServerSocket_LogInServer, NULL, NULL)) == SOCKET_ERROR) {
-		closesocket(ServerSocket_LogInServer);
-		WSACleanup();
-		return 0;
-	}
+    // listen for incoming connections
+    if (listen(ServerSocket, SOMAXCONN) == SOCKET_ERROR) {
+        closesocket(ServerSocket);
+        WSACleanup();
+        return 0;
+    }
 
-	// create client socket to connect to remote server
-	SOCKET ClientSocket_RemoteServer;
-	ClientSocket_RemoteServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (ClientSocket_RemoteServer == INVALID_SOCKET) {
-		WSACleanup();
-		return 0;
-	}
+    vector<thread> clientThreads;
 
-	sockaddr_in SvrAddr_RemoteServer;
-	SvrAddr_RemoteServer.sin_family = AF_INET;
-	SvrAddr_RemoteServer.sin_addr.s_addr = inet_addr("remote.server.address"); // replace with actual address of remote server
-	SvrAddr_RemoteServer.sin_port = htons(27000); // replace with actual port number of remote server
-	if (connect(ClientSocket_RemoteServer, (sockaddr*)&SvrAddr_RemoteServer, sizeof(SvrAddr_RemoteServer)) == SOCKET_ERROR) {
-		closesocket(ClientSocket_RemoteServer);
-		WSACleanup();
-		return 0;
-	}
+    while (true)
+    {
 
-	SOCKET ServerSockets[4];
-	for (int i = 0; i < 4; i++) {
-		ServerSockets[i] = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-		if (ServerSockets[i] == INVALID_SOCKET) {
-			WSACleanup();
-			return 0;
-		}
+        // accept incoming connection
+        SOCKET clientSocket;
+        sockaddr_in clientAddr;
+        int addrLen = sizeof(clientAddr);
 
-		sockaddr_in SvrAddr;
-		SvrAddr.sin_family = AF_INET;
-		SvrAddr.sin_addr.s_addr = INADDR_ANY;
-		SvrAddr.sin_port = htons(27000 + i);
-		if (bind(ServerSockets[i], (struct sockaddr*)&SvrAddr, sizeof(SvrAddr)) == SOCKET_ERROR)
-		{
-			closesocket(ServerSockets[i]);
-			WSACleanup();
-			return 0;
-		}
-	}
+        clientSocket = accept(ServerSocket, (struct sockaddr*)&clientAddr, &addrLen);
+        if (clientSocket == INVALID_SOCKET) {
+            break;
+        }
 
+        thread t(clientHandler, clientSocket);
+        clientThreads.push_back(move(t));
+
+    }
+
+    for (auto& t : clientThreads) {
+        t.join();
+    }
+
+
+    // closes server socket
+    closesocket(ServerSocket);
+
+    // frees Winsock DLL resources
+    WSACleanup();
 }
