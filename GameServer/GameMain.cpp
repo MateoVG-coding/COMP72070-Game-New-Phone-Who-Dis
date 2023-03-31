@@ -91,6 +91,8 @@ void clientHandler(SOCKET clientSocket) {
                         break;
                     }
                 }
+
+                emptyFile();
             }
         }
     }
