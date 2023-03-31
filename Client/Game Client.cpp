@@ -25,9 +25,9 @@ void SetPacketData(Packet& pkt, std::string username, std::string data)
     pkt.set_Source(source[0]);
     pkt.set_Destination(dst[0]);
     pkt.set_SeqNumber(seqNum);
-    pkt.set_AckFlag(&ackFlag);
-    pkt.set_ErrFlag(&errFlag);
-    pkt.set_FinFlag(&finFlag);
+    pkt.set_AckFlag(ackFlag);
+    pkt.set_ErrFlag(errFlag);
+    pkt.set_FinFlag(finFlag);
     pkt.set_UsernameLength(usrLen);
     pkt.set_DataLength(datLen);
 
