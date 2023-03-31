@@ -7,30 +7,94 @@ void clientHandler(SOCKET clientSocket) {
 
     numClients++;
 
-    char RxBuffer[128];
-    int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+    while (true)
+    {
+        Packet pkt_inbox;
+        pkt_inbox.set_CRC();
 
-    if (bytesReceived > 0) {
-        // Needs to figure out how to implement it
+        readInbox(pkt_inbox);
 
-        Packet RxPkt(RxBuffer);
+        int size = 0;
+        char* TxBuffer = pkt_inbox.serializeData(size);
 
-        if (checkFileFull(numClients) == true)
+        send(clientSocket, TxBuffer, size, 0);
+
+        char RxBuffer[128];
+        int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+
+        if (bytesReceived > 0)
         {
-            emptyFile();
+            Packet Rx(RxBuffer);
+
+            if (Rx.get_ErrFlag() == true || Rx.get_AckFlag() == false)
+            {
+                break;
+            }
+
+            Packet pkt_replies;
+            pkt_replies.set_CRC();
+
+            for (int i = 0; i < 7; i++)
+            {
+                int size_rep = 0;
+
+                readReplies(pkt_replies);
+                
+                TxBuffer = pkt_replies.serializeData(size_rep);
+
+                send(clientSocket, TxBuffer, size, 0);
+
+                bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+
+                Packet RxReplies(RxBuffer);
+
+                if (RxReplies.get_ErrFlag() == true || RxReplies.get_AckFlag() == false)
+                {
+                    break;
+                }
+            }
+
+            bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+            Packet clientReply(RxBuffer);
+
+            if (bytesReceived > 0)
+            {
+                if (clientReply.get_ErrFlag() == true || clientReply.get_AckFlag() == false)
+                {
+                    break;
+                }
+
+                addReply(clientReply);
+
+                while (checkFileFull(numClients) != true)
+                {
+                    continue;
+                }
+
+                Packet pkt_clientReply;
+                pkt_clientReply.set_CRC();
+
+                for (int i = 0; i < numClients; i++)
+                {
+                    int size_clientrep = 0;
+                    readRepliesClient(pkt_clientReply, i);
+
+                    TxBuffer = pkt_clientReply.serializeData(size_clientrep);
+
+                    send(clientSocket, TxBuffer, size_clientrep, 0);
+
+                    bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+                    Packet client_ack(RxBuffer);
+
+                    if (bytesReceived < 0 || client_ack.get_AckFlag() == false || client_ack.get_ErrFlag() == true)
+                    {
+                        break;
+                    }
+                }
+            }
         }
-
-        addReply(RxPkt);
-
-        Packet TxPkt;
-        TxPkt.set_AckFlag(true);
-
-        int Size = 0;
-        char* Tx = TxPkt.serializeData(Size);
-
-        send(clientSocket, Tx, Size, 0);
     }
-
+   
     // close client socket
     closesocket(clientSocket);
 
