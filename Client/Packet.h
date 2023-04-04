@@ -157,6 +157,11 @@ public:
 		return HEAD.sequenceNumber;
 	}
 
+	time_t get_Timestamp()
+	{
+		return HEAD.timestamp;
+	}
+
 	bool get_AckFlag()
 	{
 		return HEAD.ackFlag;
