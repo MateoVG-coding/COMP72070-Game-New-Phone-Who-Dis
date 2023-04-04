@@ -1,4 +1,5 @@
 #include "GameServer.h"
+#define MAX_PACKET_SIZE 1500
 atomic<int> numClients(0);
 
 void clientHandler(SOCKET clientSocket) {
@@ -16,7 +17,7 @@ void clientHandler(SOCKET clientSocket) {
 
         int size = 0;
         char* TxBuffer = pkt_inbox.serializeData(size);
-
+        
         send(clientSocket, TxBuffer, size, 0);
 
         char RxBuffer[128];
@@ -34,19 +35,22 @@ void clientHandler(SOCKET clientSocket) {
             Packet pkt_replies;
             pkt_replies.set_CRC();
 
+
             for (int i = 0; i < 7; i++)
             {
                 int size_rep = 0;
 
                 readReplies(pkt_replies);
                 
-                TxBuffer = pkt_replies.serializeData(size_rep);
+                char* TxBuffer_replies = pkt_replies.serializeData(size_rep);
 
-                send(clientSocket, TxBuffer, size, 0);
+                send(clientSocket, TxBuffer_replies, size, 0);
 
-                bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
+                char RxBuffer_replies[128];
 
-                Packet RxReplies(RxBuffer);
+                bytesReceived = recv(clientSocket, RxBuffer_replies, sizeof(RxBuffer_replies), 0);
+
+                Packet RxReplies(RxBuffer_replies);
 
                 if (RxReplies.get_ErrFlag() == true || RxReplies.get_AckFlag() == false)
                 {
@@ -73,15 +77,16 @@ void clientHandler(SOCKET clientSocket) {
 
                 Packet pkt_clientReply;
                 pkt_clientReply.set_CRC();
+                char TxBuffer_clientrep[128];
 
                 for (int i = 0; i < numClients; i++)
                 {
                     int size_clientrep = 0;
                     readRepliesClient(pkt_clientReply, i);
 
-                    TxBuffer = pkt_clientReply.serializeData(size_clientrep);
+                    strcpy(TxBuffer_clientrep, pkt_clientReply.serializeData(size_clientrep));
 
-                    send(clientSocket, TxBuffer, size_clientrep, 0);
+                    send(clientSocket, TxBuffer_clientrep, size_clientrep, 0);
 
                     bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
                     Packet client_ack(RxBuffer);

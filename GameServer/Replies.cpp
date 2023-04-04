@@ -1,6 +1,6 @@
 #include "GameServer.h"
 
-void addReply(Packet pkt)
+void addReply(Packet& pkt)
 {
 	ofstream file("repliesClients.txt", ios::app);
 
@@ -58,7 +58,7 @@ void emptyFile()
 	file.close();
 }
 
-void readRepliesClient(Packet pkt, int pointer)
+void readRepliesClient(Packet& pkt, int pointer)
 {
 	ifstream file("repliesClients.txt");
 
@@ -107,9 +107,9 @@ void readRepliesClient(Packet pkt, int pointer)
 	file.close();
 }
 
-void readReplies(Packet pkt)
+void readReplies(Packet& pkt)
 {
-	ifstream file("Reply_Cards");
+	ifstream file("Reply_Cards.txt");
 
 	if (!file.is_open())
 	{
@@ -157,13 +157,13 @@ void readReplies(Packet pkt)
 	file.close();
 }
 
-void readInbox(Packet pkt)
+void readInbox(Packet& pkt)
 {
-	ifstream file("Inbox_Cards");
+	ifstream file("Inbox_Cards.txt");
 
 	if (!file.is_open())
 	{
-		cout << "Error opening ""Reply_Cards"" file!" << endl;
+		cout << "Error opening ""Inbox_Cards"" file!" << endl;
 		return;
 	}
 
