@@ -4,12 +4,17 @@ void writePacketIntoLogFile(Packet RxPkt)
 {
     ofstream outFile("log.txt", ios::app);
 
+    time_t timestamp = RxPkt.get_Timestamp();
+
+    std::string timeStr = ctime(&timestamp);
+
     if (outFile.is_open())
     {
         outFile << "{" << endl;
-        outFile << RxPkt.get_Timestamp() << endl;
+        outFile << timeStr;
         outFile << RxPkt.get_User() << endl;
         outFile << RxPkt.get_Data() << endl;
+        outFile << "}" << endl;
     }
     else
     {

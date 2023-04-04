@@ -70,6 +70,29 @@ namespace UnitTestLoginServer
             outFile.close();
         }
 
+        TEST_METHOD(TestWritePacketIntoLogFile)
+        {
+            Packet pkt;
+            pkt.set_Timestamp(1649132528);
+            pkt.set_Username("user", 4);
+            pkt.set_Data("message", 7);
 
+            writePacketIntoLogFile(pkt);
+
+            ifstream inFile("log.txt");
+            string line;
+            getline(inFile, line);
+            Assert::AreEqual(line, string("{"));
+            getline(inFile, line);
+            Assert::AreEqual(line, string("Tue Apr  5 00:22:08 2022"));
+            getline(inFile, line);
+            Assert::AreEqual(line, string("user"));
+            getline(inFile, line); 
+            Assert::AreEqual(line, string("message"));
+            getline(inFile, line);
+            Assert::AreEqual(line, string("}"));
+
+            inFile.close();
+        }
 	};
 }
