@@ -1,6 +1,6 @@
 #include "Source.h"
 
-int sendPacketToServer(Packet TxPkt) 
+int sendPacketToServer(Packet TxPkt)
 {
     //This function checks if the user is already connected to the game server
 
@@ -20,8 +20,8 @@ int sendPacketToServer(Packet TxPkt)
     // connect to game server
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(27001); 
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.2"); 
+    serverAddr.sin_port = htons(27001);
+    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.2");
 
     if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         closesocket(clientSocket);
@@ -37,7 +37,7 @@ int sendPacketToServer(Packet TxPkt)
     char RxBuffer[128];
     int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
 
-    if (bytesReceived > 0) 
+    if (bytesReceived > 0)
     {
         Packet RxPkt(RxBuffer);
 
@@ -98,9 +98,9 @@ void sendPacketToClient(Packet RxPkt, SOCKET clientSocket)
     send(clientSocket, Tx, Size, 0);
 }
 
-        string username(RxPkt.get_User()));
+void clientHandler(SOCKET clientSocket) {
 
-        string password(RxPkt.get_Data());
+    //Function to send and recv packets from any client side.
 
     char RxBuffer[128];
     int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
