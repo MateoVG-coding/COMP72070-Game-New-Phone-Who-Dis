@@ -7,14 +7,14 @@ int sendPacketToServer(Packet TxPkt)
     // start Winsock DLLs
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        return;
+        return 0;
     }
 
     // create client socket 
     SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (clientSocket == INVALID_SOCKET) {
         WSACleanup();
-        return;
+        return 0;
     }
 
     // connect to game server
@@ -26,7 +26,7 @@ int sendPacketToServer(Packet TxPkt)
     if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         closesocket(clientSocket);
         WSACleanup();
-        return;
+        return 0;
     }
 
     int Size = 0;
@@ -47,15 +47,17 @@ int sendPacketToServer(Packet TxPkt)
         // free Winsock DLL resources
         WSACleanup();
 
-        if (RxPkt.get_ErrFlag() == false) //The user is already connected to the game server
-        {
-            return 1;
-        }
-        else
+        if (RxPkt.get_ErrFlag() == true) //The user is already connected to the game server
         {
             return 0;
         }
+        else
+        {
+            return 1;
+        }
     }
+
+    return 1;
 }
 
 void sendPacketToClient(Packet RxPkt, SOCKET clientSocket)
