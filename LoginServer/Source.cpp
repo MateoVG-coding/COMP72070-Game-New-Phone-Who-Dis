@@ -1,5 +1,22 @@
 #include "Source.h"
 
+void writePacketIntoLogFile(Packet RxPkt)
+{
+    ofstream outFile("log.txt", ios::app);
+
+    if (outFile.is_open())
+    {
+        outFile << "{" << endl;
+        outFile << RxPkt.get_Timestamp() << endl;
+        outFile << RxPkt.get_User() << endl;
+        outFile << RxPkt.get_Data() << endl;
+    }
+    else
+    {
+        cout << "Error opening log file!" << endl;
+    }
+}
+
 int sendPacketToServer(Packet TxPkt)
 {
     //This function checks if the user is already connected to the game server
