@@ -17,8 +17,13 @@ void clientHandler(SOCKET clientSocket) {
 
         int size = 0;
         char* TxBuffer = pkt_inbox.serializeData(size);
+
+        //Packet check(TxBuffer);
+
+        //cout << check.get_User() << endl;
+        //cout << check.get_Data() << endl;
         
-        send(clientSocket, TxBuffer, size, 0);
+        send(clientSocket, TxBuffer, size + 1, 0);
 
         char RxBuffer[128];
         int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
@@ -44,11 +49,16 @@ void clientHandler(SOCKET clientSocket) {
                 
                 char* TxBuffer_replies = pkt_replies.serializeData(size_rep);
 
-                send(clientSocket, TxBuffer_replies, size, 0);
+                send(clientSocket, TxBuffer_replies, size_rep + 1, 0);
 
                 char RxBuffer_replies[128];
 
                 bytesReceived = recv(clientSocket, RxBuffer_replies, sizeof(RxBuffer_replies), 0);
+
+                if (bytesReceived <= 0)
+                {
+                    break;
+                }
 
                 Packet RxReplies(RxBuffer_replies);
 
@@ -56,6 +66,8 @@ void clientHandler(SOCKET clientSocket) {
                 {
                     break;
                 }
+
+                delete[] TxBuffer_replies;
             }
 
             bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
