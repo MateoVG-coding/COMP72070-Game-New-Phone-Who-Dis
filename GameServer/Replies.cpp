@@ -98,8 +98,8 @@ void readRepliesClient(Packet& pkt, int pointer)
 	
 	pkt.set_Username(usr, strlen(usr));
 	pkt.set_Data(rep, strlen(rep));
-	pkt.set_UsernameLength(sizeof(usr));
-	pkt.set_DataLength(sizeof(rep));
+	pkt.set_UsernameLength(strlen(usr));
+	pkt.set_DataLength(strlen(rep));
 
 	delete[] usr;
 	delete[] rep;
@@ -148,8 +148,8 @@ void readReplies(Packet& pkt)
 
 	pkt.set_Username(usr, strlen(usr));
 	pkt.set_Data(reply, strlen(reply));
-	pkt.set_DataLength(sizeof(reply));
-	pkt.set_UsernameLength(sizeof(usr));
+	pkt.set_DataLength(strlen(reply));
+	pkt.set_UsernameLength(strlen(usr));
 
 	delete[] usr;
 	delete[] reply;
@@ -198,8 +198,8 @@ void readInbox(Packet& pkt)
 
 	pkt.set_Username(usr, strlen(usr));
 	pkt.set_Data(reply, strlen(reply));
-	pkt.set_DataLength(sizeof(reply));
-	pkt.set_UsernameLength(sizeof(usr));
+	pkt.set_DataLength(strlen(reply));
+	pkt.set_UsernameLength(strlen(usr));
 
 	delete[] usr;
 	delete[] reply;
