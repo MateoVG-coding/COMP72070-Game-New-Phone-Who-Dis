@@ -6,12 +6,44 @@
 
 using namespace std;
 
-// Function to set the data for a given packet
-void SetPacketData(Packet& pkt, std::string username, std::string data)
+// Setting packet for lig in server with the keyword login
+void SetPacketData_LogInServer(Packet& pkt, string username, string data)
 {
     //To be changed
-   const char* source = "127.0.0.1";
-    const char* dst = "Server";
+    const char* source = "\0";
+    const char* dst = "\0";
+    int seqNum = 1234;
+    string usrLogIn = username + "login";
+
+    bool ackFlag = false;
+    bool errFlag = false;
+    bool finFlag = false;
+
+    int usrLen = usrLogIn.size();
+    int datLen = data.size();
+
+    // Set the header data
+    pkt.set_Source(source[0]);
+    pkt.set_Destination(dst[0]);
+    pkt.set_SeqNumber(seqNum);
+    pkt.set_AckFlag(ackFlag);
+    pkt.set_ErrFlag(errFlag);
+    pkt.set_FinFlag(finFlag);
+    pkt.set_UsernameLength(usrLen);
+    pkt.set_DataLength(datLen);
+
+    // Set the body data
+    pkt.set_Username(const_cast<char*>(usrLogIn.c_str()), usrLen); //create a non-constant char* pointer from the const char* pointer using a typecast
+    pkt.set_Data(const_cast<char*>(data.c_str()), datLen);
+
+}
+
+// Setting packet for game server or login server when doing sign up
+void SetPacketData_GameServer(Packet& pkt, string username, string data)
+{
+    //To be changed
+    const char* source = "\0";
+    const char* dst = "\0";
     int seqNum = 1234;
 
     bool ackFlag = false;
