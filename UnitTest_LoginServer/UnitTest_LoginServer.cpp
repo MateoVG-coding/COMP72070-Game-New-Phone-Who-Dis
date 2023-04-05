@@ -70,7 +70,7 @@ namespace UnitTestLoginServer
             outFile.close();
         }
 
-        TEST_METHOD(TestWritePacketIntoLogFile)
+        TEST_METHOD(Test_Write_Packet_Into_LogFile)
         {
             Packet pkt;
             pkt.set_Timestamp(1649132528);
