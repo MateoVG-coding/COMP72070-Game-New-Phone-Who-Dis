@@ -101,8 +101,6 @@ void readRepliesClient(Packet& pkt, int pointer)
 	pkt.set_UsernameLength(strlen(usr));
 	pkt.set_DataLength(strlen(rep));
 
-	delete[] usr;
-	delete[] rep;
 
 	file.close();
 }
