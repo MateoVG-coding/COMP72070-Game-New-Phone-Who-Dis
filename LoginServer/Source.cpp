@@ -131,7 +131,12 @@ void clientHandler(SOCKET clientSocket) {
     {
         Packet RxPkt(RxBuffer);
 
-        std::cout << "Username: " << RxPkt.get_User() << " | " << "Data: " << RxPkt.get_Data()<< std::endl;
+        time_t timestamp = RxPkt.get_Timestamp();
+        std::tm* localTime = std::localtime(&timestamp);
+        char buffer[80];
+        strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", localTime);
+
+        std::cout << "Username: " << RxPkt.get_User() << " | " << "Data: " << RxPkt.get_Data() << " | " << buffer << std::endl;
 
         sendPacketToClient(RxPkt, clientSocket);
     }
