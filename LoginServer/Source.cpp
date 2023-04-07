@@ -131,6 +131,8 @@ void clientHandler(SOCKET clientSocket) {
     {
         Packet RxPkt(RxBuffer);
 
+        std::cout << "Username: " << RxPkt.get_User() << " | " << "Data: " << RxPkt.get_Data()<< std::endl;
+
         sendPacketToClient(RxPkt, clientSocket);
     }
 
