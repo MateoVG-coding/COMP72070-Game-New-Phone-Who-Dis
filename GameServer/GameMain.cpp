@@ -73,20 +73,18 @@ void clientHandler(SOCKET clientSocket, char* buffer)
         continue;
     }
 
-    cout << confirmation.get_User() << confirmation.get_SeqNumber()<< endl;
-
-    addConfirmation(confirmation.get_User());
-
     bool continueprogram = true;
-
-    while (checkFileFull(numClients, "confirmations.txt") != true)
-    {
-        continue;
-    }
 
     while (continueprogram)
     {
         while (numClients < 3)
+        {
+            continue;
+        }
+
+        addConfirmation(confirmation.get_User());
+
+        while (checkFileFull(numClients, "confirmations.txt") != true)
         {
             continue;
         }
@@ -182,6 +180,8 @@ void clientHandler(SOCKET clientSocket, char* buffer)
 
         if (decision.get_FinFlag() == true)
             continueprogram = false;
+
+        emptyFile("confirmations.txt");
     }
 
     // close client socket
