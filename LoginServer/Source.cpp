@@ -42,8 +42,8 @@ int sendPacketToServer(Packet TxPkt)
     // connect to game server
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(27001);
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.2");
+    serverAddr.sin_port = htons(27000);
+    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         closesocket(clientSocket);
@@ -141,6 +141,8 @@ void clientHandler(SOCKET clientSocket) {
         sendPacketToClient(RxPkt, clientSocket);
     }
 
+    cout << "A Client has disconnected..." << endl;
+
     // close client socket
     closesocket(clientSocket);
 }
@@ -165,7 +167,7 @@ int main(int argc, char* argv[])
     // binds socket to address
     sockaddr_in localAddr;
     localAddr.sin_family = AF_INET;
-    localAddr.sin_port = htons(27000);
+    localAddr.sin_port = htons(27001);
     localAddr.sin_addr.s_addr = INADDR_ANY;
     if (bind(ServerSocket, (struct sockaddr*)&localAddr, sizeof(localAddr)) == SOCKET_ERROR) {
         closesocket(ServerSocket);
@@ -193,6 +195,8 @@ int main(int argc, char* argv[])
         if (clientSocket == INVALID_SOCKET) {
             break;
         }
+
+        cout << "A Client has connected.." << endl;
 
         thread t(clientHandler, clientSocket);
         clientThreads.push_back(move(t));
