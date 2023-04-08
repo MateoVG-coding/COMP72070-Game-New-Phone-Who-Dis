@@ -11,7 +11,7 @@ using namespace std;
 void addReply(Packet& pkt);
 bool checkFileFull(int numClients, const char* filename);
 void emptyFile(const char* filename);
-void deleteClient(Packet pkt);
+void deleteClient(Packet pkt, const char*);
 void readRepliesClient(Packet& pkt, int*);
 void readReplies(Packet& pkt);
 void readInbox(Packet& pkt);
