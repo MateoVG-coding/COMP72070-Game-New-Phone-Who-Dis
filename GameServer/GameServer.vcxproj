@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="..\Client\Packet.h" />
     <ClInclude Include="GameServer.h" />
+    <ClInclude Include="Header.h" />
     <ClInclude Include="Replies.h" />
   </ItemGroup>
   <ItemGroup>

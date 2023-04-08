@@ -12,4 +12,8 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-void clientHandler(SOCKET clientSocket);
+void connectionHandler(SOCKET clientSocket);
+void clientHandler(SOCKET clientSocket, char*);
+void serverHandler(SOCKET clientSocket, char*);
+bool receiveAck(SOCKET clientSocket);
+void sendInbox(SOCKET clientSocket);
