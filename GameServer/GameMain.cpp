@@ -112,7 +112,10 @@ void clientHandler(SOCKET clientSocket, char* buffer)
         sendInbox(clientSocket);
         
         if (receiveAck(clientSocket) == false)
+        {
+            continueprogram = false;
             break;
+        }
 
         for (int i = 0; i < 4; i++)
         {
@@ -123,13 +126,21 @@ void clientHandler(SOCKET clientSocket, char* buffer)
             sendPackets(pkt_replies, clientSocket);
            
             if (receiveAck(clientSocket) == false)
+            {
+                continueprogram = false;
                 break;
+            }
+        }
+
+        if (!continueprogram)
+        {
+            break;
         }
 
         Packet clientReply;
         receivePacket(clientReply, clientSocket);
 
-        if (clientReply.get_ErrFlag() == true || clientReply.get_AckFlag() == false)
+        if (clientReply.get_ErrFlag() == true || clientReply.get_AckFlag() == false || clientReply.get_FinFlag() == true)
         {
             break;
         }
@@ -151,8 +162,15 @@ void clientHandler(SOCKET clientSocket, char* buffer)
             sendPackets(pkt_clientReply, clientSocket);
 
             if (receiveAck(clientSocket) == false)
+            {
+                continueprogram = false;
                 break;
-          
+            }
+        }
+
+        if (!continueprogram)
+        {
+            break;
         }
 
         if (is_judge == true)
