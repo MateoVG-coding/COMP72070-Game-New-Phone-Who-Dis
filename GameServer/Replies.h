@@ -12,7 +12,7 @@ void addReply(Packet& pkt);
 bool checkFileFull(int numClients, const char* filename);
 void emptyFile(const char* filename);
 void deleteClient(Packet pkt);
-bool readRepliesClient(Packet& pkt, int);
+void readRepliesClient(Packet& pkt, int*);
 void readReplies(Packet& pkt);
 void readInbox(Packet& pkt);
 void addClient(Packet pkt);

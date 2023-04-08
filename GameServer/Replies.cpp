@@ -9,7 +9,7 @@ void addReply(Packet& pkt)
 
 	if (file.is_open())
 	{
-		file << "/" <<pkt.get_User() << "|" << pkt.get_Data() << endl;
+		file << pkt.get_User() << "|" << pkt.get_Data() << endl;
 	}
 	else
 	{
@@ -145,51 +145,49 @@ void emptyFile(const char* filename)
 	file.close();
 }
 
-bool readRepliesClient(Packet& pkt, int pointer)
+void readRepliesClient(Packet& pkt, int* pointer)
 {
-	static std::mutex file_mutex;  
-
 	std::lock_guard<std::mutex> lock(file_mutex);
 
 	ifstream file("repliesClients.txt");
 
-	file.seekg(pointer);
+	file.seekg(*pointer);
 
 	if (!file.is_open())
 	{
 		cout << "Error opening ""replies"" file!" << endl;
-		return false;
+		return;
 	}
+
 	if (file.eof()) {
 		cout << "Reached end of file." << endl;
-
-		return false;
+		return;
 	}
 
 	string line;
 	string username;
-	string reply;
+	string rep;
 	size_t pos;
-
-	char* usr = new char[username.length() + 1];
-	char* rep = new char[reply.length() + 1];
 
 	getline(file, line);
 	pos = line.find("|");
 	username = line.substr(0, pos);
-	reply = line.substr(pos + 1);
+	rep = line.substr(pos + 1);
 
-	strcpy(usr, username.c_str());
-	strcpy(rep, reply.c_str());
+	std::unique_ptr<char[]> usr(new char[username.length() + 1]);
+	std::unique_ptr<char[]> reply(new char[rep.length() + 1]);
 
-	pkt.set_Username(usr, strlen(usr));
-	pkt.set_Data(rep, strlen(rep));
-	pkt.set_UsernameLength(strlen(usr));
-	pkt.set_DataLength(strlen(rep));
+	strcpy(usr.get(), username.c_str());
+	strcpy(reply.get(), rep.c_str());
+
+	pkt.set_Username(usr.get(), strlen(usr.get()));
+	pkt.set_Data(reply.get(), strlen(reply.get()));
+	pkt.set_DataLength(strlen(reply.get()));
+	pkt.set_UsernameLength(strlen(usr.get()));
+
+	*pointer = file.tellg(); // Update the file stream pointer to the next line
 
 	file.close();
-
-	return true;
 }
 
 void readReplies(Packet& pkt)
@@ -211,6 +209,7 @@ void readReplies(Packet& pkt)
 	int min = 1;
 	int max = 94;
 
+	// create a local random number generator for each thread
 	random_device rd;
 	mt19937 gen(rd());
 
@@ -278,16 +277,16 @@ void readInbox(Packet& pkt)
 
 		getline(file, line);
 
-		char* usr = new char[username.length() + 1];
-		char* reply = new char[line.length() + 1];
+		std::unique_ptr<char[]> usr(new char[username.length() + 1]);
+		std::unique_ptr<char[]> reply(new char[line.length() + 1]);
 
-		strcpy(usr, username.c_str());
-		strcpy(reply, line.c_str());
+		strcpy(usr.get(), username.c_str());
+		strcpy(reply.get(), line.c_str());
 
-		pkt.set_Username(usr, strlen(usr));
-		pkt.set_Data(reply, strlen(reply));
-		pkt.set_DataLength(strlen(reply));
-		pkt.set_UsernameLength(strlen(usr));
+		pkt.set_Username(usr.get(), strlen(usr.get()));
+		pkt.set_Data(reply.get(), strlen(reply.get()));
+		pkt.set_DataLength(strlen(reply.get()));
+		pkt.set_UsernameLength(strlen(usr.get()));
 
 		chosen_inbox = line;
 
@@ -296,16 +295,16 @@ void readInbox(Packet& pkt)
 	else
 	{
 		string username = "inbox";
-		char* reply = new char[chosen_inbox.length() + 1];
-		char* usr = new char[username.length() + 1];
+		std::unique_ptr<char[]> usr(new char[username.length() + 1]);
+		std::unique_ptr<char[]> reply(new char[chosen_inbox.length() + 1]);
 
-		strcpy(usr, username.c_str());
-		strcpy(reply, chosen_inbox.c_str());
+		strcpy(usr.get(), username.c_str());
+		strcpy(reply.get(), chosen_inbox.c_str());
 
-		pkt.set_Username(usr, strlen(usr));
-		pkt.set_Data(reply, strlen(reply));
-		pkt.set_DataLength(strlen(reply));
-		pkt.set_UsernameLength(strlen(usr));
+		pkt.set_Username(usr.get(), strlen(usr.get()));
+		pkt.set_Data(reply.get(), strlen(reply.get()));
+		pkt.set_DataLength(strlen(reply.get()));
+		pkt.set_UsernameLength(strlen(usr.get()));
 
 	}
 }
