@@ -189,7 +189,8 @@ void clientHandler(SOCKET clientSocket, char* buffer)
 
     numClients--;
 
-    deleteClient(confirmation);
+    deleteClient(confirmation, "confirmations.txt");
+    deleteClient(confirmation, "clientsConnected.txt");
 }
 
 void sendPackets(Packet& pkt, SOCKET clientSocket)

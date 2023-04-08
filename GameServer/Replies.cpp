@@ -19,11 +19,11 @@ void addReply(Packet& pkt)
 	file.close();
 }
 
-void deleteClient(Packet pkt) 
+void deleteClient(Packet pkt, const char* filename) 
 {
 	lock_guard<mutex> lock(file_mutex);
 	vector<string> lines;
-	ifstream file("clientsConnected.txt");
+	ifstream file(filename);
 	string line;
 	while (getline(file, line)) {
 		if (line.find(pkt.get_User()) == string::npos) {
@@ -33,7 +33,7 @@ void deleteClient(Packet pkt)
 	}
 	file.close();
 
-	ofstream outfile("clientsConnected.txt");
+	ofstream outfile(filename);
 	for (const auto& l : lines) {
 		outfile << l << std::endl;
 	}
@@ -49,6 +49,7 @@ void addConfirmation(char* username)
 	if (!file.is_open())
 	{
 		std::cout << "Error opening file!" << std::endl;
+		file.close();
 		return;
 	}
 
@@ -95,12 +96,14 @@ bool checkClients(char* name, int length)
 
 		if (strcmp(usr, name) == 0)
 		{
+			file.close();
 			return true;
 		}
 		else
 			continue;
 	}
 
+	file.close();
 	return false;
 }
 
@@ -120,6 +123,7 @@ bool checkFileFull(int numClients, const char* filename)
 
 		if (numLines == numClients)
 		{
+			file.close();
 			return true;
 		}
 
@@ -129,17 +133,19 @@ bool checkFileFull(int numClients, const char* filename)
 	else
 	{
 		cout << "Error opening file!" << endl;
+		file.close();
 		return true;
 	}
 }
 
 void emptyFile(const char* filename)
 {
-	ofstream file(filename, ios::trunc);
+	ofstream file(filename, ios::out);
 
 	if (!file.is_open())
 	{
 		cout << "Error opening file!" << endl;
+		return;
 	}
 
 	file.close();
