@@ -64,9 +64,9 @@ void serverHandler(SOCKET clientSocket, char* buffer)
 void clientHandler(SOCKET clientSocket, char* buffer)
 {
     numClients++;
-    Packet confirmation(buffer);
-    confirmation.set_SeqNumber(numClients);
-    addClient(confirmation);
+    Packet user(buffer);
+    user.set_SeqNumber(numClients);
+    addClient(user);
 
     while (numClients < 3)
     {
@@ -82,6 +82,9 @@ void clientHandler(SOCKET clientSocket, char* buffer)
             continue;
         }
 
+        Packet confirmation;
+        receivePacket(confirmation, clientSocket);
+
         addConfirmation(confirmation.get_User());
 
         while (checkFileFull(numClients, "confirmations.txt") != true)
@@ -92,10 +95,10 @@ void clientHandler(SOCKET clientSocket, char* buffer)
         int judgeNumber = generateJudge(numClients);
         bool is_judge = false;
 
-        if (confirmation.get_SeqNumber() == judgeNumber && chosen_judge.empty())
+        if (user.get_SeqNumber() == judgeNumber && chosen_judge.empty())
         {
-            cout << "Judge is: " << confirmation.get_User() << endl;
-            chosen_judge = confirmation.get_User();
+            cout << "Judge is: " << user.get_User() << endl;
+            chosen_judge = user.get_User();
             is_judge = true;
         }
 
@@ -189,8 +192,7 @@ void clientHandler(SOCKET clientSocket, char* buffer)
 
     numClients--;
 
-    deleteClient(confirmation, "confirmations.txt");
-    deleteClient(confirmation, "clientsConnected.txt");
+    deleteClient(user, "clientsConnected.txt");
 }
 
 void sendPackets(Packet& pkt, SOCKET clientSocket)
