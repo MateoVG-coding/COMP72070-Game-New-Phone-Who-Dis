@@ -302,3 +302,43 @@ void readInbox(Packet& pkt)
 
 	}
 }
+
+bool sendImagePacket(SOCKET socket, const std::string& filename) {
+	// Open image file
+	std::ifstream imageFile(filename, std::ios::binary);
+	if (!imageFile.is_open()) {
+		std::cerr << "Error opening file " << filename << std::endl;
+		return false;
+	}
+
+	// Get size of file
+	imageFile.seekg(0, std::ios::end);
+	size_t fileSize = imageFile.tellg();
+	imageFile.seekg(0, std::ios::beg);
+
+	// Allocate buffer for image data
+	std::vector<char> buffer(fileSize);
+	if (!imageFile.read(buffer.data(), fileSize)) {
+		std::cerr << "Error reading file " << filename << std::endl;
+		return false;
+	}
+
+	// Create packet
+	Packet packet;
+	packet.set_Data(buffer.data(), fileSize);
+	packet.set_DataLength(fileSize);
+	// Set other packet fields as needed (e.g. destination address)
+
+	// Send packet over socket
+	size_t bytesSent = send(socket, packet.get_Data(), packet.get_DataLength(), 0);
+	if (bytesSent == -1) {
+		std::cerr << "Error sending packet" << std::endl;
+		return false;
+	}
+	else if (static_cast<size_t>(bytesSent) != fileSize) {
+		std::cerr << "Sent " << bytesSent << " bytes, but expected to send " << fileSize << " bytes" << std::endl;
+		return false;
+	}
+
+	return true;
+}

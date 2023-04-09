@@ -18,4 +18,5 @@ void readInbox(Packet& pkt);
 void addClient(Packet pkt);
 bool checkClients(char* name, int length);
 void sendInbox(SOCKET clientSocket);
-void addConfirmation(char* username);
+void addConfirmation(char* username); 
+bool sendImagePacket(SOCKET socket, const string& filename);

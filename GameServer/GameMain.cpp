@@ -196,6 +196,11 @@ void clientHandler(SOCKET clientSocket, char* buffer)
 
         sendPackets(pkt_winner, clientSocket);
 
+        if (strcmp(chosen_winner.c_str(), user.get_User()) == 0)
+        {
+            sendImagePacket(clientSocket, "winner_image.png");
+        }
+
         Packet decision;
         receivePacket(decision, clientSocket);
 
