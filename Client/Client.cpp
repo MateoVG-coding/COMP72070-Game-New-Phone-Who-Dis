@@ -31,7 +31,7 @@ SOCKET CreateSocket(const char* ipAddress, int port) {
 	return clientSocket;
 }
 
-void sendPackets(Packet pkt, SOCKET clientSocket)
+void sendPackets_Client(Packet pkt, SOCKET clientSocket)
 {
 	//lock_guard<mutex> lock(mtx);
 	pkt.set_CRC();
@@ -69,7 +69,7 @@ void sendUser(char* name, SOCKET clientSocket)
 	user.set_Username(name, strlen(name));
 	user.set_UsernameLength(strlen(name));
 
-	sendPackets(user, clientSocket);
+	sendPackets_Client(user, clientSocket);
 }
 
 Packet receivePacket(SOCKET clientSocket)
@@ -91,7 +91,7 @@ void sendReply(char* name, char* reply, SOCKET clientSocket)
 	user.set_Data(reply, strlen(reply));
 	user.set_DataLength(strlen(reply));
 
-	sendPackets(user, clientSocket);
+	sendPackets_Client(user, clientSocket);
 }
 
 bool checkJudge(char* name, Packet judge)

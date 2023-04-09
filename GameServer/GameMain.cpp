@@ -3,6 +3,7 @@
 atomic<int> numClients(0);
 static string chosen_judge;
 static string chosen_winner;
+static bool is_judge;
 std::mutex mtx;
 
 void connectionHandler(SOCKET clientSocket) {
@@ -13,7 +14,7 @@ void connectionHandler(SOCKET clientSocket) {
 
     Packet connection(RxBuffer_check);
 
-    if (strcmp(connection.get_User(), "server") == 0)
+    if (strcmp(connection.get_User(), "LOGIN_SERVER") == 0)
     {
         serverHandler(clientSocket, RxBuffer_check);
     }
@@ -48,7 +49,7 @@ void serverHandler(SOCKET clientSocket, char* buffer)
     Packet response;
     int size = 0;
 
-    if (checkClients(user.get_User(), user.get_UsernameLength()) == true)
+    if (checkClients(user.get_Data(), user.get_DataLength()) == true)
     {
         response.set_ErrFlag(true);
         sendPackets(response, clientSocket);
@@ -61,9 +62,108 @@ void serverHandler(SOCKET clientSocket, char* buffer)
     closesocket(clientSocket);
 }
 
+void handleConfirmation(SOCKET clientSocket)
+{
+    Packet confirmation;
+    receivePacket(confirmation, clientSocket);
+
+    addConfirmation(confirmation.get_User());
+
+    while (checkFileFull(numClients, "confirmations.txt") != true)
+    {
+        continue;
+    }
+}
+
+void handleJudge(SOCKET clientSocket, Packet user)
+{
+    int judgeNumber = generateJudge(numClients);
+    is_judge = false;
+
+    if (user.get_SeqNumber() == judgeNumber && chosen_judge.empty())
+    {
+        cout << "Judge is: " << user.get_User() << endl;
+        chosen_judge = user.get_User();
+        is_judge = true;
+    }
+
+    while (chosen_judge.empty())
+    {
+        continue;
+    }
+
+    sendJudge(clientSocket);
+}
+
+void handleReplies(SOCKET clientSocket)
+{
+    Packet pkt_replies;
+
+    readReplies(pkt_replies);
+
+    sendPackets(pkt_replies, clientSocket);
+}
+
+void handleClientReply(SOCKET clientSocket)
+{
+    Packet clientReply;
+    receivePacket(clientReply, clientSocket);
+    addReply(clientReply);
+
+    while (checkFileFull(numClients, "repliesClients.txt") != true)
+    {
+        continue;
+    }
+}
+
+void handleReadClientReply(SOCKET clientSocket)
+{
+    int pointer = 0;
+
+    for (int i = 0; i < numClients; i++)
+    {
+        Packet pkt_clientReply;
+        readRepliesClient(pkt_clientReply, &pointer);
+
+        sendPackets(pkt_clientReply, clientSocket);
+    }
+}
+
+void handleIsJudge(SOCKET clientSocket, Packet user)
+{
+    if (is_judge == true)
+    {
+        Packet winner;
+        receivePacket(winner, clientSocket);
+
+        chosen_winner = winner.get_Data();
+    }
+
+    while (chosen_winner.empty())
+    {
+        continue;
+    }
+
+    Packet pkt_winner;
+
+    std::unique_ptr<char[]> usr(new char[chosen_winner.length() + 1]);
+
+    strcpy(usr.get(), chosen_winner.c_str());
+    pkt_winner.set_Username(usr.get(), strlen(usr.get()));
+    pkt_winner.set_UsernameLength(strlen(usr.get()));
+
+    sendPackets(pkt_winner, clientSocket);
+
+    if (strcmp(chosen_winner.c_str(), user.get_User()) == 0)
+    {
+        sendImagePacket(clientSocket, "winner_image.png");
+    }
+}
+
 void clientHandler(SOCKET clientSocket, char* buffer)
 {
     numClients++;
+
     Packet user(buffer);
     user.set_SeqNumber(numClients);
     addClient(user);
@@ -82,131 +182,50 @@ void clientHandler(SOCKET clientSocket, char* buffer)
             continue;
         }
 
-        Packet confirmation;
-        receivePacket(confirmation, clientSocket);
-
-        addConfirmation(confirmation.get_User());
-
-        while (checkFileFull(numClients, "confirmations.txt") != true)
-        {
-            continue;
-        }
-
-        int judgeNumber = generateJudge(numClients);
-        bool is_judge = false;
-
-        if (user.get_SeqNumber() == judgeNumber && chosen_judge.empty())
-        {
-            cout << "Judge is: " << user.get_User() << endl;
-            chosen_judge = user.get_User();
-            is_judge = true;
-        }
-
-        while (chosen_judge.empty())
-        {
-            continue;
-        }
-
-        sendJudge(clientSocket);
-
-        sendInbox(clientSocket);
+        Packet pkt;
+        receivePacket(pkt, clientSocket);
         
-        if (receiveAck(clientSocket) == false)
+        // read and send inbox
+        if (strcmp(pkt.get_Data(), "inbox"))
+        {
+            sendInbox(clientSocket);
+        }
+        // generetae a judge
+        else if (strcmp(pkt.get_Data(), "choose_judge"))
+        {
+            handleJudge(clientSocket, user);
+        }
+        // receive the reply chosen from a client
+        else if (strcmp(pkt.get_Data(), "write_reply"))
+        {
+            handleClientReply(clientSocket);
+        }
+        // read all replies from clients
+        else if (strcmp(pkt.get_Data(), "read_reply"))
+        {
+            handleReadClientReply(clientSocket);
+        }
+        // read and send a repliy to clients
+        else if (strcmp(pkt.get_Data(), "reply"))
+        {
+            handleReplies(clientSocket);
+        }
+        // receive and store confirmation from user
+        else if (strcmp(pkt.get_Data(), "confirmation"))
+        {
+            handleConfirmation(clientSocket);
+        }
+        // Judge chooses a winner and winner is sent to other clients
+        else if (strcmp(pkt.get_Data(), "winner"))
+        {
+            handleIsJudge(clientSocket, user);
+        }
+        else if (pkt.get_FinFlag() == true)
         {
             continueprogram = false;
             break;
         }
-
-        for (int i = 0; i < 4; i++)
-        {
-            Packet pkt_replies;
-
-            readReplies(pkt_replies);
-
-            sendPackets(pkt_replies, clientSocket);
-           
-            if (receiveAck(clientSocket) == false)
-            {
-                continueprogram = false;
-                break;
-            }
-        }
-
-        if (!continueprogram)
-        {
-            break;
-        }
-
-        Packet clientReply;
-        receivePacket(clientReply, clientSocket);
-
-        if (clientReply.get_ErrFlag() == true || clientReply.get_AckFlag() == false || clientReply.get_FinFlag() == true)
-        {
-            break;
-        }
-
-        addReply(clientReply);
-
-        while (checkFileFull(numClients, "repliesClients.txt") != true)
-        {
-            continue;
-        }
-
-        int pointer = 0;
-
-        for (int i = 0; i < numClients; i++)
-        {
-            Packet pkt_clientReply;
-            readRepliesClient(pkt_clientReply, &pointer);
-
-            sendPackets(pkt_clientReply, clientSocket);
-
-            if (receiveAck(clientSocket) == false)
-            {
-                continueprogram = false;
-                break;
-            }
-        }
-
-        if (!continueprogram)
-        {
-            break;
-        }
-
-        if (is_judge == true)
-        {
-            Packet winner;
-            receivePacket(winner, clientSocket);
-
-            chosen_winner = winner.get_User();
-        }
-
-        while (chosen_winner.empty())
-        {
-            continue;
-        }
-
-        Packet pkt_winner;
-
-        std::unique_ptr<char[]> usr(new char[chosen_winner.length() + 1]);
-
-        strcpy(usr.get(), chosen_winner.c_str());
-        pkt_winner.set_Username(usr.get(), strlen(usr.get()));
-        pkt_winner.set_UsernameLength(strlen(usr.get()));
-
-        sendPackets(pkt_winner, clientSocket);
-
-        if (strcmp(chosen_winner.c_str(), user.get_User()) == 0)
-        {
-            sendImagePacket(clientSocket, "winner_image.png");
-        }
-
-        Packet decision;
-        receivePacket(decision, clientSocket);
-
-        if (decision.get_FinFlag() == true)
-            continueprogram = false;
-
+        
         emptyFile("confirmations.txt");
     }
 
@@ -280,7 +299,7 @@ bool receiveAck(SOCKET clientSocket)
         return true;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
 
     // starts Winsock DLLs

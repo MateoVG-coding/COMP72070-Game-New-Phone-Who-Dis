@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void sendPackets(Packet pkt, SOCKET clientSocket);
+void sendPackets_Client(Packet pkt, SOCKET clientSocket);
 void exitGame(SOCKET clientSocket);
 void sendUser(char* name, SOCKET clientSocket);
 Packet receivePacket(SOCKET clientSocket);
