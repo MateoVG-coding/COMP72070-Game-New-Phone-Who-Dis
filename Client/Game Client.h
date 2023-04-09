@@ -1,6 +1,23 @@
 #pragma
+
+#include <iostream>
+#include <string.h>
+#include <sstream>
+#include <string>
+#include <fstream>
+#include <windows.networking.sockets.h>
+#pragma comment(lib, "Ws2_32.lib")
+#include "Packet.h"
+#include <iostream>
 #include "Packet.h"
 #include <string>
+
+void sendPackets(Packet pkt, SOCKET clientSocket);
+void exitGame(SOCKET clientSocket);
+void sendUser(char* name, SOCKET clientSocket);
+Packet receivePacket(SOCKET clientSocket);
+void sendReply(char* name, char* reply, SOCKET clientSocket);
+bool checkJudge(char* name, Packet judge);
 
 using namespace std;
 
