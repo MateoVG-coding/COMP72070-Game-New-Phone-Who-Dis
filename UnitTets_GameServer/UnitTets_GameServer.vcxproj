@@ -99,7 +99,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\Ibapo\OneDrive\Escritorio\School\Winter 2023\Project IV\Project\GameServer\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\GameServer\x64\Debug;C:\Users\Ibapo\OneDrive\Escritorio\School\Winter 2023\Project IV\Project\GameServer\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Replies.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

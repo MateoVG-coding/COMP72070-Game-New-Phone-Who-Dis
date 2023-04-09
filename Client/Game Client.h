@@ -1,8 +1,8 @@
 #pragma
 
-#include <windows.networking.sockets.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <windows.networking.sockets.h>
 #pragma comment(lib, "Ws2_32.lib")
 #include "Packet.h"
 #include <iostream>
@@ -12,15 +12,15 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+
 void sendPackets(Packet pkt, SOCKET clientSocket);
 void exitGame(SOCKET clientSocket);
 void sendUser(char* name, SOCKET clientSocket);
 Packet receivePacket(SOCKET clientSocket);
 void sendReply(char* name, char* reply, SOCKET clientSocket);
 bool checkJudge(char* name, Packet judge);
-SOCKET CreateSocket(const char* ipAddress, int port)
-
-using namespace std;
+SOCKET CreateSocket(const char* ipAddress, int port);
 
 void SetPacketData_LogInServer(Packet& pkt, string username, string data);
 

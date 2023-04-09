@@ -199,7 +199,6 @@ namespace ChatWF {
 			this->button_Option1->TabIndex = 0;
 			this->button_Option1->Text = L"Reply 1";
 			this->button_Option1->UseVisualStyleBackColor = false;
-			this->button_Option1->Click += gcnew System::EventHandler(this, &ChatForm::button_Option1_Click);
 			// 
 			// button_Option3
 			// 

@@ -103,3 +103,8 @@ bool checkJudge(char* name, Packet judge)
 	else
 		return false;
 }
+
+void main(void)
+{
+
+}

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../Client/Packet.h"
-#include <Game Client.h>
+#include "Game Client.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
