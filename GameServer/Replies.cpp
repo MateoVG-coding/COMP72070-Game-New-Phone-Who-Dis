@@ -78,29 +78,17 @@ void addClient(Packet pkt)
 bool checkClients(char* name, int length)
 {
 	ifstream file("clientsConnected.txt");
-
-	if (!file.is_open())
-	{
-		cout << "Error opening ""cleintsConnected"" file!" << endl;
-		file.close();
+	if (!file.is_open()) {
+		cout << "Error opening ""clientsConnected"" file!" << endl;
 		return false;
 	}
 
 	string line;
-
-	while (!file.eof())
-	{
-		getline(file, line);
-
-		char* usr = new char[length + 1];
-
-		if (strcmp(usr, name) == 0)
-		{
+	while (getline(file, line)) {
+		if (line.length() == length && line.compare(0, length, name) == 0) {
 			file.close();
 			return true;
 		}
-		else
-			continue;
 	}
 
 	file.close();
