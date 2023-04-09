@@ -79,6 +79,11 @@ public:
 		HEAD.sequenceNumber = value;
 	}
 
+	void set_Timestamp(time_t time)
+	{
+		HEAD.timestamp = time;
+	}
+
 	void set_AckFlag(bool value)
 	{
 		HEAD.ackFlag = value;
@@ -150,6 +155,11 @@ public:
 	int get_SeqNumber()
 	{
 		return HEAD.sequenceNumber;
+	}
+
+	time_t get_Timestamp()
+	{
+		return HEAD.timestamp;
 	}
 
 	bool get_AckFlag()
