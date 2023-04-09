@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ChatWF {
+namespace JudgeWF {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -10,12 +10,12 @@ namespace ChatWF {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for ChatForm
+	/// Summary for JudgeForm
 	/// </summary>
-	public ref class ChatForm : public System::Windows::Forms::Form
+	public ref class JudgeForm : public System::Windows::Forms::Form
 	{
 	public:
-		ChatForm(void)
+		JudgeForm(void)
 		{
 			InitializeComponent();
 			//
@@ -27,7 +27,7 @@ namespace ChatWF {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~ChatForm()
+		~JudgeForm()
 		{
 			if (components)
 			{
@@ -35,28 +35,19 @@ namespace ChatWF {
 			}
 		}
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
+	protected:
+	private: System::Windows::Forms::RichTextBox^ richTextBox_Chat;
+	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
 	private: System::Windows::Forms::Button^ button_Player3;
 
+
 	private: System::Windows::Forms::Button^ button_Player1;
-
-
-
-
-
-	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
 	private: System::Windows::Forms::Button^ button_Player2;
 
-	private: System::Windows::Forms::RichTextBox^ richTextBox_Chat;
+
 	private: System::Windows::Forms::Button^ button_Player4;
-	private: System::Windows::Forms::Button^ button_Player6;
-
-
 	private: System::Windows::Forms::Button^ button_Player5;
-
-
-
-
-
+	private: System::Windows::Forms::Button^ button_Player6;
 
 
 
@@ -75,16 +66,16 @@ namespace ChatWF {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ChatForm::typeid));
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(JudgeForm::typeid));
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->richTextBox_Chat = (gcnew System::Windows::Forms::RichTextBox());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->button_Player3 = (gcnew System::Windows::Forms::Button());
 			this->button_Player1 = (gcnew System::Windows::Forms::Button());
 			this->button_Player2 = (gcnew System::Windows::Forms::Button());
-			this->button_Player4 = (gcnew System::Windows::Forms::Button());
-			this->button_Player5 = (gcnew System::Windows::Forms::Button());
 			this->button_Player6 = (gcnew System::Windows::Forms::Button());
+			this->button_Player5 = (gcnew System::Windows::Forms::Button());
+			this->button_Player4 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
@@ -110,7 +101,7 @@ namespace ChatWF {
 			this->splitContainer1->Panel2->Controls->Add(this->tableLayoutPanel1);
 			this->splitContainer1->Size = System::Drawing::Size(1382, 753);
 			this->splitContainer1->SplitterDistance = 514;
-			this->splitContainer1->TabIndex = 1;
+			this->splitContainer1->TabIndex = 2;
 			// 
 			// richTextBox_Chat
 			// 
@@ -138,20 +129,19 @@ namespace ChatWF {
 				33.33334F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				33.33334F)));
-			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				20)));
-			this->tableLayoutPanel1->Controls->Add(this->button_Player6, 0, 1);
+			this->tableLayoutPanel1->Controls->Add(this->button_Player4, 0, 1);
 			this->tableLayoutPanel1->Controls->Add(this->button_Player5, 0, 1);
+			this->tableLayoutPanel1->Controls->Add(this->button_Player6, 0, 1);
 			this->tableLayoutPanel1->Controls->Add(this->button_Player3, 2, 0);
 			this->tableLayoutPanel1->Controls->Add(this->button_Player1, 0, 0);
 			this->tableLayoutPanel1->Controls->Add(this->button_Player2, 1, 0);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player4, 0, 1);
 			this->tableLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->tableLayoutPanel1->Location = System::Drawing::Point(0, 0);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
-			this->tableLayoutPanel1->RowCount = 2;
+			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
 			this->tableLayoutPanel1->Size = System::Drawing::Size(1382, 235);
 			this->tableLayoutPanel1->TabIndex = 3;
 			// 
@@ -193,7 +183,6 @@ namespace ChatWF {
 			this->button_Player1->TabIndex = 0;
 			this->button_Player1->Text = L"Player 1";
 			this->button_Player1->UseVisualStyleBackColor = false;
-			this->button_Player1->Click += gcnew System::EventHandler(this, &ChatForm::button_Option1_Click);
 			// 
 			// button_Player2
 			// 
@@ -213,42 +202,6 @@ namespace ChatWF {
 			this->button_Player2->Text = L"Player 2";
 			this->button_Player2->UseVisualStyleBackColor = false;
 			// 
-			// button_Player4
-			// 
-			this->button_Player4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				| System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player4->AutoSize = true;
-			this->button_Player4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
-				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player4->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button_Player4->Location = System::Drawing::Point(3, 120);
-			this->button_Player4->Name = L"button_Player4";
-			this->button_Player4->Size = System::Drawing::Size(454, 112);
-			this->button_Player4->TabIndex = 2;
-			this->button_Player4->Text = L"Player 4";
-			this->button_Player4->UseVisualStyleBackColor = false;
-			// 
-			// button_Player5
-			// 
-			this->button_Player5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				| System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player5->AutoSize = true;
-			this->button_Player5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
-				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player5->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button_Player5->Location = System::Drawing::Point(463, 120);
-			this->button_Player5->Name = L"button_Player5";
-			this->button_Player5->Size = System::Drawing::Size(454, 112);
-			this->button_Player5->TabIndex = 3;
-			this->button_Player5->Text = L"Player 5";
-			this->button_Player5->UseVisualStyleBackColor = false;
-			// 
 			// button_Player6
 			// 
 			this->button_Player6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
@@ -267,7 +220,45 @@ namespace ChatWF {
 			this->button_Player6->Text = L"Player 6";
 			this->button_Player6->UseVisualStyleBackColor = false;
 			// 
-			// ChatForm
+			// button_Player5
+			// 
+			this->button_Player5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->button_Player5->AutoSize = true;
+			this->button_Player5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+				static_cast<System::Int32>(static_cast<System::Byte>(206)));
+			this->button_Player5->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_Player5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Player5->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_Player5->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->button_Player5->Location = System::Drawing::Point(463, 120);
+			this->button_Player5->Name = L"button_Player5";
+			this->button_Player5->Size = System::Drawing::Size(454, 112);
+			this->button_Player5->TabIndex = 5;
+			this->button_Player5->Text = L"Player 5";
+			this->button_Player5->UseVisualStyleBackColor = false;
+			// 
+			// button_Player4
+			// 
+			this->button_Player4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->button_Player4->AutoSize = true;
+			this->button_Player4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+				static_cast<System::Int32>(static_cast<System::Byte>(206)));
+			this->button_Player4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Player4->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_Player4->Location = System::Drawing::Point(3, 120);
+			this->button_Player4->Name = L"button_Player4";
+			this->button_Player4->Size = System::Drawing::Size(454, 112);
+			this->button_Player4->TabIndex = 6;
+			this->button_Player4->Text = L"Player 4";
+			this->button_Player4->UseVisualStyleBackColor = false;
+			// 
+			// JudgeForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -276,7 +267,7 @@ namespace ChatWF {
 			this->ClientSize = System::Drawing::Size(1382, 753);
 			this->Controls->Add(this->splitContainer1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
-			this->Name = L"ChatForm";
+			this->Name = L"JudgeForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"New Phone, Who Dis\?";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
@@ -290,5 +281,5 @@ namespace ChatWF {
 
 		}
 #pragma endregion
-};
+	};
 }
