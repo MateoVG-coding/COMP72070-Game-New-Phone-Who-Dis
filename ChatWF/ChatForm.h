@@ -35,23 +35,33 @@ namespace ChatWF {
 			}
 		}
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
-	private: System::Windows::Forms::Button^ button_Player3;
+	private: System::Windows::Forms::Button^ button_Option4;
 
-	private: System::Windows::Forms::Button^ button_Player1;
+	private: System::Windows::Forms::Button^ button_Option1;
+
+
+
 
 
 
 
 
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
-	private: System::Windows::Forms::Button^ button_Player2;
+	private: System::Windows::Forms::Button^ button_Option3;
+
+
 
 	private: System::Windows::Forms::RichTextBox^ richTextBox_Chat;
-	private: System::Windows::Forms::Button^ button_Player4;
-	private: System::Windows::Forms::Button^ button_Player6;
+	private: System::Windows::Forms::Button^ button_Option2;
 
 
-	private: System::Windows::Forms::Button^ button_Player5;
+
+
+
+
+
+
+
 
 
 
@@ -79,12 +89,10 @@ namespace ChatWF {
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->richTextBox_Chat = (gcnew System::Windows::Forms::RichTextBox());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->button_Player3 = (gcnew System::Windows::Forms::Button());
-			this->button_Player1 = (gcnew System::Windows::Forms::Button());
-			this->button_Player2 = (gcnew System::Windows::Forms::Button());
-			this->button_Player4 = (gcnew System::Windows::Forms::Button());
-			this->button_Player5 = (gcnew System::Windows::Forms::Button());
-			this->button_Player6 = (gcnew System::Windows::Forms::Button());
+			this->button_Option4 = (gcnew System::Windows::Forms::Button());
+			this->button_Option1 = (gcnew System::Windows::Forms::Button());
+			this->button_Option3 = (gcnew System::Windows::Forms::Button());
+			this->button_Option2 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
@@ -131,141 +139,105 @@ namespace ChatWF {
 			// 
 			// tableLayoutPanel1
 			// 
-			this->tableLayoutPanel1->ColumnCount = 3;
+			this->tableLayoutPanel1->ColumnCount = 4;
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				33.33332F)));
+				25.06265F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				33.33334F)));
+				25.06266F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				33.33334F)));
-			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				20)));
-			this->tableLayoutPanel1->Controls->Add(this->button_Player6, 0, 1);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player5, 0, 1);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player3, 2, 0);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player1, 0, 0);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player2, 1, 0);
-			this->tableLayoutPanel1->Controls->Add(this->button_Player4, 0, 1);
+				25.06266F)));
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				24.81203F)));
+			this->tableLayoutPanel1->Controls->Add(this->button_Option2, 0, 0);
+			this->tableLayoutPanel1->Controls->Add(this->button_Option4, 2, 0);
+			this->tableLayoutPanel1->Controls->Add(this->button_Option1, 0, 0);
+			this->tableLayoutPanel1->Controls->Add(this->button_Option3, 1, 0);
 			this->tableLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->tableLayoutPanel1->Location = System::Drawing::Point(0, 0);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
-			this->tableLayoutPanel1->RowCount = 2;
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
+			this->tableLayoutPanel1->RowCount = 1;
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
 			this->tableLayoutPanel1->Size = System::Drawing::Size(1382, 235);
 			this->tableLayoutPanel1->TabIndex = 3;
 			// 
-			// button_Player3
+			// button_Option4
 			// 
-			this->button_Player3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->button_Option4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player3->AutoSize = true;
-			this->button_Player3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+			this->button_Option4->AutoSize = true;
+			this->button_Option4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
 				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player3->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button_Player3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player3->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button_Option4->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_Option4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Option4->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Player3->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->button_Player3->Location = System::Drawing::Point(923, 3);
-			this->button_Player3->Name = L"button_Player3";
-			this->button_Player3->Size = System::Drawing::Size(456, 111);
-			this->button_Player3->TabIndex = 2;
-			this->button_Player3->Text = L"Player 3";
-			this->button_Player3->UseVisualStyleBackColor = false;
+			this->button_Option4->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->button_Option4->Location = System::Drawing::Point(1041, 3);
+			this->button_Option4->Name = L"button_Option4";
+			this->button_Option4->Size = System::Drawing::Size(338, 229);
+			this->button_Option4->TabIndex = 2;
+			this->button_Option4->Text = L"Reply 4";
+			this->button_Option4->UseVisualStyleBackColor = false;
 			// 
-			// button_Player1
+			// button_Option1
 			// 
-			this->button_Player1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->button_Option1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player1->AutoSize = true;
-			this->button_Player1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+			this->button_Option1->AutoSize = true;
+			this->button_Option1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
 				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player1->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button_Player1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player1->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button_Option1->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_Option1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Option1->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Player1->Location = System::Drawing::Point(3, 3);
-			this->button_Player1->Name = L"button_Player1";
-			this->button_Player1->Size = System::Drawing::Size(454, 111);
-			this->button_Player1->TabIndex = 0;
-			this->button_Player1->Text = L"Player 1";
-			this->button_Player1->UseVisualStyleBackColor = false;
-			this->button_Player1->Click += gcnew System::EventHandler(this, &ChatForm::button_Option1_Click);
+			this->button_Option1->Location = System::Drawing::Point(3, 3);
+			this->button_Option1->Name = L"button_Option1";
+			this->button_Option1->Size = System::Drawing::Size(340, 229);
+			this->button_Option1->TabIndex = 0;
+			this->button_Option1->Text = L"Reply 1";
+			this->button_Option1->UseVisualStyleBackColor = false;
+			this->button_Option1->Click += gcnew System::EventHandler(this, &ChatForm::button_Option1_Click);
 			// 
-			// button_Player2
+			// button_Option3
 			// 
-			this->button_Player2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->button_Option3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player2->AutoSize = true;
-			this->button_Player2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+			this->button_Option3->AutoSize = true;
+			this->button_Option3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
 				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player2->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button_Option3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Option3->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Player2->Location = System::Drawing::Point(463, 3);
-			this->button_Player2->Name = L"button_Player2";
-			this->button_Player2->Size = System::Drawing::Size(454, 111);
-			this->button_Player2->TabIndex = 1;
-			this->button_Player2->Text = L"Player 2";
-			this->button_Player2->UseVisualStyleBackColor = false;
+			this->button_Option3->Location = System::Drawing::Point(695, 3);
+			this->button_Option3->Name = L"button_Option3";
+			this->button_Option3->Size = System::Drawing::Size(340, 229);
+			this->button_Option3->TabIndex = 1;
+			this->button_Option3->Text = L"Reply 3";
+			this->button_Option3->UseVisualStyleBackColor = false;
 			// 
-			// button_Player4
+			// button_Option2
 			// 
-			this->button_Player4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->button_Option2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player4->AutoSize = true;
-			this->button_Player4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
+			this->button_Option2->AutoSize = true;
+			this->button_Option2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
 				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player4->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button_Option2->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_Option2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_Option2->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Player4->Location = System::Drawing::Point(3, 120);
-			this->button_Player4->Name = L"button_Player4";
-			this->button_Player4->Size = System::Drawing::Size(454, 112);
-			this->button_Player4->TabIndex = 2;
-			this->button_Player4->Text = L"Player 4";
-			this->button_Player4->UseVisualStyleBackColor = false;
-			// 
-			// button_Player5
-			// 
-			this->button_Player5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				| System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player5->AutoSize = true;
-			this->button_Player5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
-				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player5->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button_Player5->Location = System::Drawing::Point(463, 120);
-			this->button_Player5->Name = L"button_Player5";
-			this->button_Player5->Size = System::Drawing::Size(454, 112);
-			this->button_Player5->TabIndex = 3;
-			this->button_Player5->Text = L"Player 5";
-			this->button_Player5->UseVisualStyleBackColor = false;
-			// 
-			// button_Player6
-			// 
-			this->button_Player6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				| System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button_Player6->AutoSize = true;
-			this->button_Player6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(167)),
-				static_cast<System::Int32>(static_cast<System::Byte>(206)));
-			this->button_Player6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button_Player6->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button_Player6->Location = System::Drawing::Point(923, 120);
-			this->button_Player6->Name = L"button_Player6";
-			this->button_Player6->Size = System::Drawing::Size(456, 112);
-			this->button_Player6->TabIndex = 4;
-			this->button_Player6->Text = L"Player 6";
-			this->button_Player6->UseVisualStyleBackColor = false;
+			this->button_Option2->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->button_Option2->Location = System::Drawing::Point(349, 3);
+			this->button_Option2->Name = L"button_Option2";
+			this->button_Option2->Size = System::Drawing::Size(340, 229);
+			this->button_Option2->TabIndex = 3;
+			this->button_Option2->Text = L"Reply 2";
+			this->button_Option2->UseVisualStyleBackColor = false;
 			// 
 			// ChatForm
 			// 
