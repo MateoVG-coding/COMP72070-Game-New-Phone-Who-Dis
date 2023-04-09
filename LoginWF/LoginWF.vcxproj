@@ -79,7 +79,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\SignupWF;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\ChatWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\JudgeWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\SignupWF;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />

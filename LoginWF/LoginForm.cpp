@@ -1,4 +1,7 @@
 #include "LoginForm.h"
+#include "SignupForm.h"
+#include "ChatForm.h"
+#include "JudgeForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
