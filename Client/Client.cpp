@@ -7,6 +7,12 @@ void sendPackets(Packet pkt, SOCKET clientSocket)
 	pkt.set_CRC();
 	pkt.set_AckFlag(true);
 
+	auto now = std::chrono::system_clock::now();
+
+	std::time_t time = std::chrono::system_clock::to_time_t(now);
+
+	pkt.set_Timestamp(time);
+
 	int size = 0;
 
 	char* TxBuffer(pkt.serializeData(size));

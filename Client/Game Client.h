@@ -1,16 +1,14 @@
 #pragma
 
-#include <iostream>
-#include <string.h>
-#include <sstream>
-#include <string>
-#include <fstream>
 #include <windows.networking.sockets.h>
 #pragma comment(lib, "Ws2_32.lib")
 #include "Packet.h"
 #include <iostream>
 #include "Packet.h"
 #include <string>
+#include <chrono>
+#include <fstream>
+#include <sstream>
 
 void sendPackets(Packet pkt, SOCKET clientSocket);
 void exitGame(SOCKET clientSocket);
