@@ -1,6 +1,36 @@
 #include "Packet.h"
 #include "Game Client.h"
 
+SOCKET CreateSocket(const char* ipAddress, int port) {
+	//starts Winsock DLLs
+	WSADATA wsaData;
+	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
+		return INVALID_SOCKET;
+	}
+
+	//initializes socket. SOCK_STREAM: TCP
+	SOCKET clientSocket;
+	clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (clientSocket == INVALID_SOCKET) {
+		WSACleanup();
+		return INVALID_SOCKET;
+	}
+
+	//Connect socket to specified server
+	sockaddr_in serverAddr;
+	serverAddr.sin_family = AF_INET;						//Address family type itnernet
+	serverAddr.sin_port = htons(port);						//port (host to network conversion)
+	inet_pton(AF_INET, ipAddress, &serverAddr.sin_addr);	//IP address
+
+	if ((connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr))) == SOCKET_ERROR) {
+		closesocket(clientSocket);
+		WSACleanup();
+		return INVALID_SOCKET;
+	}
+
+	return clientSocket;
+}
+
 void sendPackets(Packet pkt, SOCKET clientSocket)
 {
 	//lock_guard<mutex> lock(mtx);

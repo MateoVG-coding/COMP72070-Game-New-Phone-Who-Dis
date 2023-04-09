@@ -1,5 +1,8 @@
 #pragma once
 
+#include <windows.networking.sockets.h>
+#pragma comment(lib, "Ws2_32.lib")
+
 namespace LoginWF {
 
 	using namespace System;
@@ -15,6 +18,7 @@ namespace LoginWF {
 	public ref class LoginForm : public System::Windows::Forms::Form
 	{
 	public:
+
 		LoginForm(void)
 		{
 			InitializeComponent();
