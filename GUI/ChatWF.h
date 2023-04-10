@@ -15,6 +15,21 @@ namespace Chat_Form {
 	public ref class ChatWF : public System::Windows::Forms::Form
 	{
 	public:
+		SOCKET clientSocket;
+		String^ username;
+		Form^ obj;
+
+		ChatWF(SOCKET clientSocket, String^ username, Form^ obj)
+		{
+			// Store the parameter values in class fields for later use
+			this->clientSocket = clientSocket;
+			this->username = username;
+			this->obj = obj;
+
+			// Call the original InitializeComponent method to initialize the form's components
+			InitializeComponent();
+		}
+
 		ChatWF(void)
 		{
 			InitializeComponent();

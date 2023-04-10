@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game Client.h"
+#include "../Client/Game Client.h"
 #include "SignupWF.h"
 
 #include <msclr/marshal_cppstd.h>

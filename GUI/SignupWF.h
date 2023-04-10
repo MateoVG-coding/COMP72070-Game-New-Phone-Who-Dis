@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game Client.h"
+#include "../Client/Game Client.h"
 #include "ChatWF.h"
 #include <msclr/marshal_cppstd.h>
 #include <msclr\marshal_cppstd.h>
@@ -278,11 +278,11 @@ namespace SignUp_Form{
 		Packet pkt;
 
 		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);
-		char* username = new char[strU.length() + 1];
-		std::strcpy(username, strU.c_str());
+		char* username_x = new char[strU.length() + 1];
+		std::strcpy(username_x, strU.c_str());
 		int sizeUsername = static_cast<int>(strU.length());
 
-		pkt.set_Username(username, sizeUsername);
+		pkt.set_Username(username_x, sizeUsername);
 
 		std::string strP = msclr::interop::marshal_as<std::string>(textBox_Password->Text);
 		char* password = new char[strP.length() + 1];
@@ -291,7 +291,7 @@ namespace SignUp_Form{
 
 		pkt.set_Data(password, sizePassword);
 
-		delete[] username;
+		delete[] username_x;
 		delete[] password;
 
 		sendPackets_Client(pkt, clientSocket);
@@ -302,7 +302,7 @@ namespace SignUp_Form{
 		}
 		else
 		{
-			Chat_Form::ChatWF^ chatForm = gcnew Chat_Form::ChatWF();
+			Chat_Form::ChatWF^ chatForm = gcnew Chat_Form::ChatWF(clientSocket, username, this);
 			chatForm->Show();
 			this->Hide();
 		}
