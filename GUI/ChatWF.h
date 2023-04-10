@@ -312,16 +312,11 @@ namespace Chat_Form {
 		msclr::interop::marshal_context context;
 		const char* usernameChars = context.marshal_as<const char*>(username);
 
-		//pkt.set_Username(usernameChars, strlen(usernameChars));
-		//pkt.set_UsernameLength(strlen(usernameChars));
+		char name[30];
+		strcpy(name, usernameChars);
 
-		sendPackets_Client(pkt, clientSocket);
-
-		char data[20];
-		strcpy(data, "confirmation");
-
-		pkt.set_Data(data, strlen(data));
-		pkt.set_DataLength(strlen(data));
+		pkt.set_Username(name, strlen(name));
+		pkt.set_UsernameLength(strlen(name));
 
 		sendPackets_Client(pkt, clientSocket);
 	}
