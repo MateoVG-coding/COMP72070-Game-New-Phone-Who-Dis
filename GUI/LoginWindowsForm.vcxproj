@@ -138,6 +138,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChatWF.resx">
+      <DependentUpon>ChatWF.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginWF.resx" />
     <EmbeddedResource Include="SignupWF.resx">
       <DependentUpon>SignupWF.h</DependentUpon>

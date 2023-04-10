@@ -198,6 +198,7 @@ namespace SignUp_Form{
 			this->textBox_Password->Name = L"textBox_Password";
 			this->textBox_Password->Size = System::Drawing::Size(738, 34);
 			this->textBox_Password->TabIndex = 6;
+			this->textBox_Password->UseSystemPasswordChar = true;
 			// 
 			// textBox_Username
 			// 
