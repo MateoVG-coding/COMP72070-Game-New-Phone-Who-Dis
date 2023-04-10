@@ -93,7 +93,7 @@ namespace GUI{
 			// 
 			// splitContainer1.Panel1
 			// 
-			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("./Resources/background_login.jpg");
+			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("../Resources/background_login.jpg");
 			this->splitContainer1->Panel1->Controls->Add(this->logo);
 			// 
 			// splitContainer1.Panel2
@@ -116,7 +116,7 @@ namespace GUI{
 			// 
 			this->logo->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->logo->BackColor = System::Drawing::Color::Transparent;
-			this->logo->Image = Image::FromFile("./Resources/logo.png");
+			this->logo->Image = Image::FromFile("../Resources/logo.png");
 			this->logo->Location = System::Drawing::Point(1, 118);
 			this->logo->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
 			this->logo->Name = L"logo";
@@ -260,9 +260,9 @@ namespace GUI{
 		}
 #pragma endregion
 	private: System::Void linkLabel_SignIn_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
-		this->Hide();
-		LoginForm^ FormLogin = gcnew LoginForm();
-		FormLogin->Show();
+		//this->Hide();
+		//LoginForm^ FormLogin = gcnew LoginForm();
+		//FormLogin->Show();
 	}
 	private: System::Void button_SignUp_Click(System::Object^ sender, System::EventArgs^ e) {
 	}

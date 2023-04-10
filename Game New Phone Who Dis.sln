@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_LoginServer", "Uni
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JudgeWF", "JudgeWF\JudgeWF.vcxproj", "{6BAF548A-38BC-4EF3-978F-F49B859BAE70}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "LoginWindowsForm\LoginWindowsForm.vcxproj", "{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\LoginWindowsForm.vcxproj", "{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
