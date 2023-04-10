@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SignupWF.h"
-
+#include "ChatWF.h"
 #include <msclr/marshal_cppstd.h>
 #include <msclr\marshal_cppstd.h>
 
