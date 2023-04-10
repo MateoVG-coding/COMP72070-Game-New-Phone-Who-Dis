@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../Client/Packet.h"
+#include "../GameServer/GameServer.h"
+#include "LoginWF.h"
+
 namespace Chat_Form {
 
 	using namespace System;
@@ -96,6 +100,7 @@ namespace Chat_Form {
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->splitContainer1->Location = System::Drawing::Point(0, 0);
+			this->splitContainer1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->splitContainer1->Name = L"splitContainer1";
 			this->splitContainer1->Orientation = System::Windows::Forms::Orientation::Horizontal;
 			// 
@@ -108,8 +113,9 @@ namespace Chat_Form {
 			// splitContainer1.Panel2
 			// 
 			this->splitContainer1->Panel2->Controls->Add(this->tableLayoutPanel1);
-			this->splitContainer1->Size = System::Drawing::Size(1382, 753);
-			this->splitContainer1->SplitterDistance = 514;
+			this->splitContainer1->Size = System::Drawing::Size(1555, 941);
+			this->splitContainer1->SplitterDistance = 642;
+			this->splitContainer1->SplitterWidth = 5;
 			this->splitContainer1->TabIndex = 1;
 			// 
 			// button_Leave
@@ -119,12 +125,14 @@ namespace Chat_Form {
 				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->button_Leave->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->button_Leave->Font = (gcnew System::Drawing::Font(L"Courier New", 12, System::Drawing::FontStyle::Bold));
-			this->button_Leave->Location = System::Drawing::Point(1224, 406);
+			this->button_Leave->Location = System::Drawing::Point(1377, 508);
+			this->button_Leave->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Leave->Name = L"button_Leave";
-			this->button_Leave->Size = System::Drawing::Size(146, 94);
+			this->button_Leave->Size = System::Drawing::Size(164, 118);
 			this->button_Leave->TabIndex = 2;
 			this->button_Leave->Text = L"Leave";
 			this->button_Leave->UseVisualStyleBackColor = false;
+			this->button_Leave->Click += gcnew System::EventHandler(this, &ChatWF::button_Leave_Click);
 			// 
 			// button_Ready
 			// 
@@ -133,12 +141,14 @@ namespace Chat_Form {
 				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->button_Ready->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->button_Ready->Font = (gcnew System::Drawing::Font(L"Courier New", 12, System::Drawing::FontStyle::Bold));
-			this->button_Ready->Location = System::Drawing::Point(1224, 14);
+			this->button_Ready->Location = System::Drawing::Point(1377, 18);
+			this->button_Ready->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Ready->Name = L"button_Ready";
-			this->button_Ready->Size = System::Drawing::Size(146, 94);
+			this->button_Ready->Size = System::Drawing::Size(164, 118);
 			this->button_Ready->TabIndex = 1;
 			this->button_Ready->Text = L"Ready";
 			this->button_Ready->UseVisualStyleBackColor = false;
+			this->button_Ready->Click += gcnew System::EventHandler(this, &ChatWF::button_Ready_Click);
 			// 
 			// richTextBox_Chat
 			// 
@@ -150,10 +160,11 @@ namespace Chat_Form {
 			this->richTextBox_Chat->Font = (gcnew System::Drawing::Font(L"Courier New", 15, System::Drawing::FontStyle::Bold));
 			this->richTextBox_Chat->ForeColor = System::Drawing::SystemColors::ControlText;
 			this->richTextBox_Chat->HideSelection = false;
-			this->richTextBox_Chat->Location = System::Drawing::Point(12, 14);
+			this->richTextBox_Chat->Location = System::Drawing::Point(14, 18);
+			this->richTextBox_Chat->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->richTextBox_Chat->Name = L"richTextBox_Chat";
 			this->richTextBox_Chat->ReadOnly = true;
-			this->richTextBox_Chat->Size = System::Drawing::Size(1191, 486);
+			this->richTextBox_Chat->Size = System::Drawing::Size(1339, 606);
 			this->richTextBox_Chat->TabIndex = 0;
 			this->richTextBox_Chat->Text = L"";
 			// 
@@ -174,11 +185,12 @@ namespace Chat_Form {
 			this->tableLayoutPanel1->Controls->Add(this->button_Option3, 1, 0);
 			this->tableLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->tableLayoutPanel1->Location = System::Drawing::Point(0, 0);
+			this->tableLayoutPanel1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 235)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(1382, 235);
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 294)));
+			this->tableLayoutPanel1->Size = System::Drawing::Size(1555, 294);
 			this->tableLayoutPanel1->TabIndex = 3;
 			// 
 			// button_Option2
@@ -194,9 +206,10 @@ namespace Chat_Form {
 			this->button_Option2->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button_Option2->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->button_Option2->Location = System::Drawing::Point(349, 3);
+			this->button_Option2->Location = System::Drawing::Point(392, 4);
+			this->button_Option2->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Option2->Name = L"button_Option2";
-			this->button_Option2->Size = System::Drawing::Size(340, 229);
+			this->button_Option2->Size = System::Drawing::Size(383, 286);
 			this->button_Option2->TabIndex = 3;
 			this->button_Option2->Text = L"Reply 2";
 			this->button_Option2->UseVisualStyleBackColor = false;
@@ -214,9 +227,10 @@ namespace Chat_Form {
 			this->button_Option4->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button_Option4->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->button_Option4->Location = System::Drawing::Point(1041, 3);
+			this->button_Option4->Location = System::Drawing::Point(1170, 4);
+			this->button_Option4->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Option4->Name = L"button_Option4";
-			this->button_Option4->Size = System::Drawing::Size(338, 229);
+			this->button_Option4->Size = System::Drawing::Size(382, 286);
 			this->button_Option4->TabIndex = 2;
 			this->button_Option4->Text = L"Reply 4";
 			this->button_Option4->UseVisualStyleBackColor = false;
@@ -233,9 +247,10 @@ namespace Chat_Form {
 			this->button_Option1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button_Option1->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Option1->Location = System::Drawing::Point(3, 3);
+			this->button_Option1->Location = System::Drawing::Point(3, 4);
+			this->button_Option1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Option1->Name = L"button_Option1";
-			this->button_Option1->Size = System::Drawing::Size(340, 229);
+			this->button_Option1->Size = System::Drawing::Size(383, 286);
 			this->button_Option1->TabIndex = 0;
 			this->button_Option1->Text = L"Reply 1";
 			this->button_Option1->UseVisualStyleBackColor = false;
@@ -251,22 +266,24 @@ namespace Chat_Form {
 			this->button_Option3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button_Option3->Font = (gcnew System::Drawing::Font(L"Courier New", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button_Option3->Location = System::Drawing::Point(695, 3);
+			this->button_Option3->Location = System::Drawing::Point(781, 4);
+			this->button_Option3->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->button_Option3->Name = L"button_Option3";
-			this->button_Option3->Size = System::Drawing::Size(340, 229);
+			this->button_Option3->Size = System::Drawing::Size(383, 286);
 			this->button_Option3->TabIndex = 1;
 			this->button_Option3->Text = L"Reply 3";
 			this->button_Option3->UseVisualStyleBackColor = false;
 			// 
 			// ChatWF
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(178)), static_cast<System::Int32>(static_cast<System::Byte>(178)),
 				static_cast<System::Int32>(static_cast<System::Byte>(178)));
-			this->ClientSize = System::Drawing::Size(1382, 753);
+			this->ClientSize = System::Drawing::Size(1555, 941);
 			this->Controls->Add(this->splitContainer1);
-			this->Icon = gcnew System::Drawing::Icon("../Resources/sms.ico");
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"ChatWF";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"New Phone, Who Dis\?";
@@ -281,5 +298,38 @@ namespace Chat_Form {
 
 		}
 #pragma endregion
-	};
+	private: System::Void button_Leave_Click(System::Object^ sender, System::EventArgs^ e) {
+		exitGame(clientSocket);
+
+		Login_Form::LoginForm^ logForm = gcnew Login_Form::LoginForm();
+		logForm->Show();
+		this->Hide();
+	}
+	private: System::Void button_Ready_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		Packet pkt;
+
+		msclr::interop::marshal_context context;
+		char* usernameChars = context.marshal_as<char*>(username);
+
+		pkt.set_Username(usernameChars, strlen(usernameChars));
+		pkt.set_UsernameLength(strlen(usernameChars));
+
+		if (checkConfirmations(pkt.get_User(), pkt.get_UsernameLength()) == true)
+		{
+			MessageBox::Show("Your confirmation has already been sent", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			return;
+		}
+
+		sendPackets_Client(pkt, clientSocket);
+
+		char data[20];
+		strcpy(data, "confirmation");
+
+		pkt.set_Data(data, strlen(data));
+		pkt.set_DataLength(strlen(data));
+	
+		sendPackets_Client(pkt, clientSocket);
+	}
+};
 }

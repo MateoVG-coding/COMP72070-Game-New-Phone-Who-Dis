@@ -20,3 +20,4 @@ bool checkClients(char* name, int length);
 void sendInbox(SOCKET clientSocket);
 void addConfirmation(char* username); 
 bool sendImagePacket(SOCKET socket, const string& filename);
+bool checkConfirmations(char* name, int length);

@@ -95,6 +95,26 @@ bool checkClients(char* name, int length)
 	return false;
 }
 
+bool checkConfirmations(char* name, int length)
+{
+	ifstream file("confirmations.txt");
+	if (!file.is_open()) {
+		cout << "Error opening ""clientsConnected"" file!" << endl;
+		return false;
+	}
+
+	string line;
+	while (getline(file, line)) {
+		if (line.length() == length && line.compare(0, length, name) == 0) {
+			file.close();
+			return true;
+		}
+	}
+
+	file.close();
+	return false;
+}
+
 bool checkFileFull(int numClients, const char* filename)
 {
 	ifstream file(filename);
