@@ -1,7 +1,7 @@
 #pragma once
-
-#include <windows.networking.sockets.h>
-#pragma comment(lib, "Ws2_32.lib")
+#include <msclr\marshal.h>
+#include <msclr\marshal_cppstd.h>
+#include "Game Client.h"
 
 namespace LoginWF {
 
@@ -18,6 +18,8 @@ namespace LoginWF {
 	public ref class LoginForm : public System::Windows::Forms::Form
 	{
 	public:
+		System::String^ username;
+		SOCKET clientSocket;
 
 		LoginForm(void)
 		{
@@ -74,13 +76,13 @@ namespace LoginWF {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(LoginForm::typeid));
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->logo = (gcnew System::Windows::Forms::PictureBox());
-			this->welcome_Label = (gcnew System::Windows::Forms::Label());
-			this->label_username = (gcnew System::Windows::Forms::Label());
-			this->textBox_Username = (gcnew System::Windows::Forms::TextBox());
-			this->label_Password = (gcnew System::Windows::Forms::Label());
-			this->textBox_password = (gcnew System::Windows::Forms::TextBox());
-			this->button_Login = (gcnew System::Windows::Forms::Button());
 			this->linkLabel_Signup = (gcnew System::Windows::Forms::LinkLabel());
+			this->button_Login = (gcnew System::Windows::Forms::Button());
+			this->textBox_password = (gcnew System::Windows::Forms::TextBox());
+			this->label_Password = (gcnew System::Windows::Forms::Label());
+			this->textBox_Username = (gcnew System::Windows::Forms::TextBox());
+			this->label_username = (gcnew System::Windows::Forms::Label());
+			this->welcome_Label = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
@@ -126,61 +128,19 @@ namespace LoginWF {
 			this->logo->TabIndex = 0;
 			this->logo->TabStop = false;
 			// 
-			// welcome_Label
+			// linkLabel_Signup
 			// 
-			this->welcome_Label->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->welcome_Label->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->welcome_Label->Font = (gcnew System::Drawing::Font(L"Courier New", 35));
-			this->welcome_Label->Location = System::Drawing::Point(283, 26);
-			this->welcome_Label->Name = L"welcome_Label";
-			this->welcome_Label->Size = System::Drawing::Size(281, 89);
-			this->welcome_Label->TabIndex = 0;
-			this->welcome_Label->Text = L"WELCOME";
-			this->welcome_Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// label_username
-			// 
-			this->label_username->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->label_username->AutoSize = true;
-			this->label_username->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
-			this->label_username->Location = System::Drawing::Point(50, 141);
-			this->label_username->Name = L"label_username";
-			this->label_username->Size = System::Drawing::Size(159, 33);
-			this->label_username->TabIndex = 1;
-			this->label_username->Text = L"Username";
-			// 
-			// textBox_Username
-			// 
-			this->textBox_Username->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox_Username->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
-			this->textBox_Username->Location = System::Drawing::Point(57, 203);
-			this->textBox_Username->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->textBox_Username->Name = L"textBox_Username";
-			this->textBox_Username->Size = System::Drawing::Size(738, 34);
-			this->textBox_Username->TabIndex = 2;
-			// 
-			// label_Password
-			// 
-			this->label_Password->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->label_Password->AutoSize = true;
-			this->label_Password->Cursor = System::Windows::Forms::Cursors::Default;
-			this->label_Password->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
-			this->label_Password->Location = System::Drawing::Point(50, 266);
-			this->label_Password->Name = L"label_Password";
-			this->label_Password->Size = System::Drawing::Size(159, 33);
-			this->label_Password->TabIndex = 3;
-			this->label_Password->Text = L"Password";
-			// 
-			// textBox_password
-			// 
-			this->textBox_password->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->textBox_password->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
-			this->textBox_password->Location = System::Drawing::Point(57, 328);
-			this->textBox_password->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->textBox_password->Name = L"textBox_password";
-			this->textBox_password->Size = System::Drawing::Size(738, 34);
-			this->textBox_password->TabIndex = 4;
-			this->textBox_password->UseSystemPasswordChar = true;
+			this->linkLabel_Signup->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->linkLabel_Signup->Font = (gcnew System::Drawing::Font(L"Courier New", 15));
+			this->linkLabel_Signup->LinkColor = System::Drawing::Color::Black;
+			this->linkLabel_Signup->Location = System::Drawing::Point(278, 643);
+			this->linkLabel_Signup->Name = L"linkLabel_Signup";
+			this->linkLabel_Signup->Size = System::Drawing::Size(343, 29);
+			this->linkLabel_Signup->TabIndex = 6;
+			this->linkLabel_Signup->TabStop = true;
+			this->linkLabel_Signup->Text = L"Don\'t have an account\?";
+			this->linkLabel_Signup->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->linkLabel_Signup->VisitedLinkColor = System::Drawing::Color::Black;
 			// 
 			// button_Login
 			// 
@@ -191,27 +151,70 @@ namespace LoginWF {
 			this->button_Login->Font = (gcnew System::Drawing::Font(L"Courier New", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button_Login->ForeColor = System::Drawing::Color::White;
-			this->button_Login->Location = System::Drawing::Point(343, 547);
+			this->button_Login->Location = System::Drawing::Point(342, 547);
 			this->button_Login->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->button_Login->Name = L"button_Login";
 			this->button_Login->Size = System::Drawing::Size(210, 67);
 			this->button_Login->TabIndex = 5;
 			this->button_Login->Text = L"LOGIN";
 			this->button_Login->UseVisualStyleBackColor = false;
+			this->button_Login->Click += gcnew System::EventHandler(this, &LoginForm::button_Login_Click);
 			// 
-			// linkLabel_Signup
+			// textBox_password
 			// 
-			this->linkLabel_Signup->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->linkLabel_Signup->Font = (gcnew System::Drawing::Font(L"Courier New", 15));
-			this->linkLabel_Signup->LinkColor = System::Drawing::Color::Black;
-			this->linkLabel_Signup->Location = System::Drawing::Point(279, 643);
-			this->linkLabel_Signup->Name = L"linkLabel_Signup";
-			this->linkLabel_Signup->Size = System::Drawing::Size(343, 29);
-			this->linkLabel_Signup->TabIndex = 6;
-			this->linkLabel_Signup->TabStop = true;
-			this->linkLabel_Signup->Text = L"Don\'t have an account\?";
-			this->linkLabel_Signup->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			this->linkLabel_Signup->VisitedLinkColor = System::Drawing::Color::Black;
+			this->textBox_password->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox_password->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
+			this->textBox_password->Location = System::Drawing::Point(56, 328);
+			this->textBox_password->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->textBox_password->Name = L"textBox_password";
+			this->textBox_password->Size = System::Drawing::Size(738, 34);
+			this->textBox_password->TabIndex = 4;
+			this->textBox_password->UseSystemPasswordChar = true;
+			// 
+			// label_Password
+			// 
+			this->label_Password->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->label_Password->AutoSize = true;
+			this->label_Password->Cursor = System::Windows::Forms::Cursors::Default;
+			this->label_Password->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
+			this->label_Password->Location = System::Drawing::Point(49, 266);
+			this->label_Password->Name = L"label_Password";
+			this->label_Password->Size = System::Drawing::Size(159, 33);
+			this->label_Password->TabIndex = 3;
+			this->label_Password->Text = L"Password";
+			// 
+			// textBox_Username
+			// 
+			this->textBox_Username->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->textBox_Username->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
+			this->textBox_Username->Location = System::Drawing::Point(56, 203);
+			this->textBox_Username->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->textBox_Username->Name = L"textBox_Username";
+			this->textBox_Username->Size = System::Drawing::Size(738, 34);
+			this->textBox_Username->TabIndex = 2;
+			// 
+			// label_username
+			// 
+			this->label_username->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->label_username->AutoSize = true;
+			this->label_username->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
+			this->label_username->Location = System::Drawing::Point(49, 141);
+			this->label_username->Name = L"label_username";
+			this->label_username->Size = System::Drawing::Size(159, 33);
+			this->label_username->TabIndex = 1;
+			this->label_username->Text = L"Username";
+			// 
+			// welcome_Label
+			// 
+			this->welcome_Label->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->welcome_Label->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->welcome_Label->Font = (gcnew System::Drawing::Font(L"Courier New", 35));
+			this->welcome_Label->Location = System::Drawing::Point(282, 26);
+			this->welcome_Label->Name = L"welcome_Label";
+			this->welcome_Label->Size = System::Drawing::Size(281, 89);
+			this->welcome_Label->TabIndex = 0;
+			this->welcome_Label->Text = L"WELCOME";
+			this->welcome_Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// LoginForm
 			// 
@@ -236,5 +239,30 @@ namespace LoginWF {
 
 		}
 #pragma endregion
-	};
+	private: System::Void button_Login_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		Packet pkt;
+
+		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);
+		strU += "login"; 
+		char* username = new char[strU.length() + 1]; 
+		std::strcpy(username, strU.c_str());
+		int sizeUsername = static_cast<int>(strU.length());
+
+		pkt.set_Username(username, sizeUsername);
+
+		std::string strP = msclr::interop::marshal_as<std::string>(textBox_password->Text);
+		char* password = new char[strP.length() + 1];
+		std::strcpy(password, strP.c_str());
+		int sizePassword = static_cast<int>(strP.length());
+
+		pkt.set_Data(password, sizePassword);
+
+		delete[] username;
+		delete[] password;
+
+		sendPackets_Client(pkt, clientSocket);
+
+	}
+};
 }

@@ -79,7 +79,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\ChatWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\JudgeWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\SignupWF;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\LoginServer;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\Client;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -133,6 +133,14 @@
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Client.vcxproj">
+      <Project>{013ae1ae-2466-4cf5-bed4-8cb8423b3ec0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LoginServer\LoginServer.vcxproj">
+      <Project>{5794ca16-e428-4219-9064-881b2ee99c79}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

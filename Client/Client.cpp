@@ -1,7 +1,6 @@
-#include "Packet.h"
 #include "Game Client.h"
 
-SOCKET CreateSocket(const char* ipAddress, int port) {
+SOCKET CreateSocket(int port) {
 	//starts Winsock DLLs
 	WSADATA wsaData;
 	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
@@ -20,7 +19,7 @@ SOCKET CreateSocket(const char* ipAddress, int port) {
 	sockaddr_in serverAddr;
 	serverAddr.sin_family = AF_INET;						//Address family type itnernet
 	serverAddr.sin_port = htons(port);						//port (host to network conversion)
-	inet_pton(AF_INET, ipAddress, &serverAddr.sin_addr);	//IP address
+	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");	//IP address
 
 	if ((connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr))) == SOCKET_ERROR) {
 		closesocket(clientSocket);
@@ -45,7 +44,7 @@ void sendPackets_Client(Packet pkt, SOCKET clientSocket)
 
 	int size = 0;
 
-	char* TxBuffer(pkt.serializeData(size));
+	char* TxBuffer = pkt.serializeData(size);
 
 	send(clientSocket, TxBuffer, size + 1, 0);
 }
