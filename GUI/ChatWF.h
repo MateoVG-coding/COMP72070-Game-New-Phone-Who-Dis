@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../Client/Packet.h"
+#include "../Client/Game Client.h"
 #include "../GameServer/GameServer.h"
-#include "LoginWF.h"
+#include <msclr/marshal_cppstd.h>
+
 
 namespace Chat_Form {
 
@@ -307,17 +309,11 @@ namespace Chat_Form {
 
 		Packet pkt;
 
-		//msclr::interop::marshal_context context;
-		//char* usernameChars = context.marshal_as<char*>(username);
+		msclr::interop::marshal_context context;
+		const char* usernameChars = context.marshal_as<const char*>(username);
 
 		//pkt.set_Username(usernameChars, strlen(usernameChars));
 		//pkt.set_UsernameLength(strlen(usernameChars));
-
-		if (checkClients(pkt.get_User(), pkt.get_UsernameLength(), "confirmations.txt") == true)
-		{
-			MessageBox::Show("Your confirmation has already been sent", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			return;
-		}
 
 		sendPackets_Client(pkt, clientSocket);
 
