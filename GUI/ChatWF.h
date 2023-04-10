@@ -301,21 +301,19 @@ namespace Chat_Form {
 	private: System::Void button_Leave_Click(System::Object^ sender, System::EventArgs^ e) {
 		exitGame(clientSocket);
 
-		Login_Form::LoginForm^ logForm = gcnew Login_Form::LoginForm();
-		logForm->Show();
-		this->Hide();
+		this->Close();
 	}
 	private: System::Void button_Ready_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		Packet pkt;
 
-		msclr::interop::marshal_context context;
-		char* usernameChars = context.marshal_as<char*>(username);
+		//msclr::interop::marshal_context context;
+		//char* usernameChars = context.marshal_as<char*>(username);
 
-		pkt.set_Username(usernameChars, strlen(usernameChars));
-		pkt.set_UsernameLength(strlen(usernameChars));
+		//pkt.set_Username(usernameChars, strlen(usernameChars));
+		//pkt.set_UsernameLength(strlen(usernameChars));
 
-		if (checkConfirmations(pkt.get_User(), pkt.get_UsernameLength()) == true)
+		if (checkClients(pkt.get_User(), pkt.get_UsernameLength(), "confirmations.txt") == true)
 		{
 			MessageBox::Show("Your confirmation has already been sent", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			return;
@@ -328,7 +326,7 @@ namespace Chat_Form {
 
 		pkt.set_Data(data, strlen(data));
 		pkt.set_DataLength(strlen(data));
-	
+
 		sendPackets_Client(pkt, clientSocket);
 	}
 };

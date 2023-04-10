@@ -1,10 +1,11 @@
 #include "GameServer.h"
 #define MAX_PACKET_SIZE 1500;
-atomic<int> numClients(0);
-static string chosen_judge;
-static string chosen_winner;
+std::atomic<int> numClients(0);
+static std::string chosen_judge;
+static std::string chosen_winner;
 static bool is_judge;
 std::mutex mtx;
+using namespace std;
 
 void connectionHandler(SOCKET clientSocket) {
 
@@ -36,7 +37,7 @@ void connectionHandler(SOCKET clientSocket) {
 
 int generateJudge(int numClients)
 {
-    lock_guard<mutex> lock(mtx);
+    std::lock_guard<std::mutex> lock(mtx);
     static thread_local std::mt19937 generator{ std::random_device{}() };
     static thread_local std::unordered_set<int> generatedNumbers;
 
@@ -60,7 +61,7 @@ bool serverHandler(SOCKET clientSocket, char* buffer)
     Packet response;
     int size = 0;
 
-    if (checkClients(user.get_Data(), user.get_DataLength()) == true)
+    if (checkClients(user.get_Data(), user.get_DataLength(), "clientsConnected.txt") == true)
     {
         response.set_ErrFlag(true);
         sendPackets(response, clientSocket);
@@ -95,7 +96,7 @@ void handleJudge(SOCKET clientSocket, Packet user)
 
     if (user.get_SeqNumber() == judgeNumber && chosen_judge.empty())
     {
-        cout << "Judge is: " << user.get_User() << endl;
+        std::cout << "Judge is: " << user.get_User() << std::endl;
         chosen_judge = user.get_User();
         is_judge = true;
     }

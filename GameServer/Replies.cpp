@@ -1,6 +1,7 @@
 #include "GameServer.h"
 std::mutex file_mutex;
 static string chosen_inbox;
+using namespace std;
 
 void addReply(Packet& pkt)
 {
@@ -75,29 +76,9 @@ void addClient(Packet pkt)
 	file.close();
 }
 
-bool checkClients(char* name, int length)
+bool checkClients(char* name, int length, const char* filename)
 {
-	ifstream file("clientsConnected.txt");
-	if (!file.is_open()) {
-		cout << "Error opening ""clientsConnected"" file!" << endl;
-		return false;
-	}
-
-	string line;
-	while (getline(file, line)) {
-		if (line.length() == length && line.compare(0, length, name) == 0) {
-			file.close();
-			return true;
-		}
-	}
-
-	file.close();
-	return false;
-}
-
-bool checkConfirmations(char* name, int length)
-{
-	ifstream file("confirmations.txt");
+	ifstream file(filename);
 	if (!file.is_open()) {
 		cout << "Error opening ""clientsConnected"" file!" << endl;
 		return false;
