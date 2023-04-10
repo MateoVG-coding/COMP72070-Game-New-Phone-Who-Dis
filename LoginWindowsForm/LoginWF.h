@@ -94,7 +94,7 @@ namespace GUI{
 			// 
 			// splitContainer1.Panel1
 			// 
-			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\background_login.jpg");
+			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("./Resources/background_login.jpg");
 			this->splitContainer1->Panel1->Controls->Add(this->logo);
 			// 
 			// splitContainer1.Panel2
@@ -114,7 +114,7 @@ namespace GUI{
 			// logo
 			// 
 			this->logo->BackColor = System::Drawing::Color::Transparent;
-			this->logo->Image = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\logo.png");
+			this->logo->Image = Image::FromFile("./Resources/logo.png");
 			this->logo->Location = System::Drawing::Point(1, 118);
 			this->logo->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->logo->Name = L"logo";
@@ -219,7 +219,7 @@ namespace GUI{
 			this->ClientSize = System::Drawing::Size(1382, 703);
 			this->Controls->Add(this->splitContainer1);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
-			this->Icon = gcnew System::Drawing::Icon("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\sms.ico");
+			this->Icon = gcnew System::Drawing::Icon("./Resources/sms.ico");
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->MaximizeBox = false;
 			this->Name = L"LoginForm";
