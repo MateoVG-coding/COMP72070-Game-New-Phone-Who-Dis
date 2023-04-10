@@ -20,12 +20,13 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{7A815A1C-FB3C-493B-82E7-58EECB458C3F}</ProjectGuid>
+    <ProjectGuid>{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}</ProjectGuid>
     <EnableManagedPackageReferenceSupport>true</EnableManagedPackageReferenceSupport>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>LoginWF</RootNamespace>
+    <RootNamespace>LoginWindowsForm</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GUI</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,10 +80,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\ChatWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\JudgeWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\SignupWF;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\LoginServer;C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\Client;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Mateo V.G\source\repos\Game-New-Phone-Who-Dis\Client;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
@@ -122,30 +124,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoginForm.cpp" />
+    <ClCompile Include="LoginWF.cpp" />
+    <ClCompile Include="SignupWF.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LoginForm.h">
+    <ClInclude Include="LoginWF.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="SignupWF.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LoginForm.resx">
-      <DependentUpon>LoginForm.h</DependentUpon>
+    <EmbeddedResource Include="LoginWF.resx" />
+    <EmbeddedResource Include="SignupWF.resx">
+      <DependentUpon>SignupWF.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChatWF\ChatWF.vcxproj">
-      <Project>{1f84d6d5-1f1f-43d5-95f5-9164ce17f3b1}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Client\Client.vcxproj">
       <Project>{013ae1ae-2466-4cf5-bed4-8cb8423b3ec0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\JudgeWF\JudgeWF.vcxproj">
-      <Project>{6baf548a-38bc-4ef3-978f-f49b859bae70}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\LoginServer\LoginServer.vcxproj">
-      <Project>{5794ca16-e428-4219-9064-881b2ee99c79}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

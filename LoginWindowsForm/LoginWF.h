@@ -1,10 +1,12 @@
 #pragma once
+#include "Game Client.h"
+
 #include <msclr\marshal.h>
 #include <msclr\marshal_cppstd.h>
-#include "Game Client.h"
-#include "SignupForm.h"
 
-namespace LoginWF {
+#include "SignupWF.h"
+
+namespace GUI{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -19,8 +21,9 @@ namespace LoginWF {
 	public ref class LoginForm : public System::Windows::Forms::Form
 	{
 	public:
-		System::String^ username;
+
 		SOCKET clientSocket;
+		String^ username;
 
 		LoginForm(void)
 		{
@@ -51,15 +54,6 @@ namespace LoginWF {
 	private: System::Windows::Forms::LinkLabel^ linkLabel_Signup;
 
 	private: System::Windows::Forms::Button^ button_Login;
-
-
-
-
-
-
-	protected:
-
-	protected:
 
 	private:
 		/// <summary>
@@ -100,7 +94,7 @@ namespace LoginWF {
 			// 
 			// splitContainer1.Panel1
 			// 
-			this->splitContainer1->Panel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"splitContainer1.Panel1.BackgroundImage")));
+			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\background_login.jpg");
 			this->splitContainer1->Panel1->Controls->Add(this->logo);
 			// 
 			// splitContainer1.Panel2
@@ -120,7 +114,7 @@ namespace LoginWF {
 			// logo
 			// 
 			this->logo->BackColor = System::Drawing::Color::Transparent;
-			this->logo->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"logo.Image")));
+			this->logo->Image = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\logo.png");
 			this->logo->Location = System::Drawing::Point(1, 118);
 			this->logo->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->logo->Name = L"logo";
@@ -134,7 +128,7 @@ namespace LoginWF {
 			this->linkLabel_Signup->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->linkLabel_Signup->Font = (gcnew System::Drawing::Font(L"Courier New", 15));
 			this->linkLabel_Signup->LinkColor = System::Drawing::Color::Black;
-			this->linkLabel_Signup->Location = System::Drawing::Point(275, 643);
+			this->linkLabel_Signup->Location = System::Drawing::Point(274, 643);
 			this->linkLabel_Signup->Name = L"linkLabel_Signup";
 			this->linkLabel_Signup->Size = System::Drawing::Size(343, 29);
 			this->linkLabel_Signup->TabIndex = 6;
@@ -153,7 +147,7 @@ namespace LoginWF {
 			this->button_Login->Font = (gcnew System::Drawing::Font(L"Courier New", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button_Login->ForeColor = System::Drawing::Color::White;
-			this->button_Login->Location = System::Drawing::Point(339, 547);
+			this->button_Login->Location = System::Drawing::Point(338, 547);
 			this->button_Login->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->button_Login->Name = L"button_Login";
 			this->button_Login->Size = System::Drawing::Size(210, 67);
@@ -166,7 +160,7 @@ namespace LoginWF {
 			// 
 			this->textBox_password->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->textBox_password->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
-			this->textBox_password->Location = System::Drawing::Point(53, 328);
+			this->textBox_password->Location = System::Drawing::Point(52, 328);
 			this->textBox_password->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->textBox_password->Name = L"textBox_password";
 			this->textBox_password->Size = System::Drawing::Size(738, 34);
@@ -179,7 +173,7 @@ namespace LoginWF {
 			this->label_Password->AutoSize = true;
 			this->label_Password->Cursor = System::Windows::Forms::Cursors::Default;
 			this->label_Password->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
-			this->label_Password->Location = System::Drawing::Point(46, 266);
+			this->label_Password->Location = System::Drawing::Point(45, 266);
 			this->label_Password->Name = L"label_Password";
 			this->label_Password->Size = System::Drawing::Size(159, 33);
 			this->label_Password->TabIndex = 3;
@@ -189,7 +183,7 @@ namespace LoginWF {
 			// 
 			this->textBox_Username->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->textBox_Username->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
-			this->textBox_Username->Location = System::Drawing::Point(53, 203);
+			this->textBox_Username->Location = System::Drawing::Point(52, 203);
 			this->textBox_Username->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->textBox_Username->Name = L"textBox_Username";
 			this->textBox_Username->Size = System::Drawing::Size(738, 34);
@@ -200,7 +194,7 @@ namespace LoginWF {
 			this->label_username->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->label_username->AutoSize = true;
 			this->label_username->Font = (gcnew System::Drawing::Font(L"Courier New", 18));
-			this->label_username->Location = System::Drawing::Point(46, 141);
+			this->label_username->Location = System::Drawing::Point(45, 141);
 			this->label_username->Name = L"label_username";
 			this->label_username->Size = System::Drawing::Size(159, 33);
 			this->label_username->TabIndex = 1;
@@ -211,7 +205,7 @@ namespace LoginWF {
 			this->welcome_Label->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->welcome_Label->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->welcome_Label->Font = (gcnew System::Drawing::Font(L"Courier New", 35));
-			this->welcome_Label->Location = System::Drawing::Point(279, 26);
+			this->welcome_Label->Location = System::Drawing::Point(278, 26);
 			this->welcome_Label->Name = L"welcome_Label";
 			this->welcome_Label->Size = System::Drawing::Size(281, 89);
 			this->welcome_Label->TabIndex = 0;
@@ -225,7 +219,7 @@ namespace LoginWF {
 			this->ClientSize = System::Drawing::Size(1382, 703);
 			this->Controls->Add(this->splitContainer1);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Icon = gcnew System::Drawing::Icon("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\sms.ico");
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->MaximizeBox = false;
 			this->Name = L"LoginForm";
@@ -246,8 +240,8 @@ namespace LoginWF {
 		Packet pkt;
 
 		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);
-		strU += "login"; 
-		char* username = new char[strU.length() + 1]; 
+		strU += "login";
+		char* username = new char[strU.length() + 1];
 		std::strcpy(username, strU.c_str());
 		int sizeUsername = static_cast<int>(strU.length());
 
@@ -269,9 +263,8 @@ namespace LoginWF {
 	private: System::Void linkLabel_Signup_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
 
 		this->Hide();
-	 	SignupWF::SignupForm^ FormSignUp = gcnew SignupWF::SignupForm();
-		FormSignUp->ShowDialog();
-		this->Show();
+		SignupForm^ FormSignup = gcnew SignupForm();
+		FormSignup->ShowDialog();
 	}
-};
+	};
 }

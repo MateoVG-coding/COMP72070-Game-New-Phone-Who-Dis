@@ -9,6 +9,14 @@ void Main(array<String^>^ args)
 	Application::SetCompatibleTextRenderingDefault(false);
 	LoginWF::LoginForm form;
 	form.clientSocket = CreateSocket(27001);
-	Application::Run(% form);
+
+	try
+	{
+		Application::Run(% form);
+	}
+	catch (System::IO::FileNotFoundException^ excep)
+	{
+		MessageBox::Show("Missing file is: " + excep->FileName);
+	}
 }
 

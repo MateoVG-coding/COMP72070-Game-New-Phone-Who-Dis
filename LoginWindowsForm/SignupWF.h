@@ -1,6 +1,8 @@
 #pragma once
 
-namespace SignupWF {
+#include "LoginWF.h"
+
+namespace GUI{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -34,6 +36,7 @@ namespace SignupWF {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
 	private: System::Windows::Forms::PictureBox^ logo;
 	private: System::Windows::Forms::Label^ signUp_Label;
@@ -54,7 +57,7 @@ namespace SignupWF {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container^ components;
+		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -63,6 +66,7 @@ namespace SignupWF {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(SignupForm::typeid));
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->logo = (gcnew System::Windows::Forms::PictureBox());
 			this->linkLabel_SignIn = (gcnew System::Windows::Forms::LinkLabel());
@@ -89,6 +93,7 @@ namespace SignupWF {
 			// 
 			// splitContainer1.Panel1
 			// 
+			this->splitContainer1->Panel1->BackgroundImage = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\background_login.jpg");
 			this->splitContainer1->Panel1->Controls->Add(this->logo);
 			// 
 			// splitContainer1.Panel2
@@ -111,6 +116,7 @@ namespace SignupWF {
 			// 
 			this->logo->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->logo->BackColor = System::Drawing::Color::Transparent;
+			this->logo->Image = Image::FromFile("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\logo.png");
 			this->logo->Location = System::Drawing::Point(1, 118);
 			this->logo->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
 			this->logo->Name = L"logo";
@@ -132,6 +138,7 @@ namespace SignupWF {
 			this->linkLabel_SignIn->Text = L"I already have an account";
 			this->linkLabel_SignIn->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->linkLabel_SignIn->VisitedLinkColor = System::Drawing::Color::Black;
+			this->linkLabel_SignIn->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &SignupForm::linkLabel_SignIn_LinkClicked);
 			// 
 			// button_SignUp
 			// 
@@ -229,16 +236,17 @@ namespace SignupWF {
 			this->signUp_Label->Text = L"SIGN UP";
 			this->signUp_Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// SignupForm
+			// SignupWF
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1382, 703);
 			this->Controls->Add(this->splitContainer1);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
+			this->Icon = gcnew System::Drawing::Icon("C:\\Users\\Mateo V.G\\source\\repos\\Game-New-Phone-Who-Dis\\Resources\\sms.ico");
 			this->Margin = System::Windows::Forms::Padding(3, 5, 3, 5);
 			this->MaximizeBox = false;
 			this->MaximumSize = System::Drawing::Size(1400, 900);
-			this->Name = L"SignupForm";
+			this->Name = L"SignupWF";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"New Phone, Who Dis\? - Sign Up";
 			this->splitContainer1->Panel1->ResumeLayout(false);
@@ -251,8 +259,12 @@ namespace SignupWF {
 
 		}
 #pragma endregion
+	private: System::Void linkLabel_SignIn_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
+		this->Hide();
+		LoginForm^ FormLogin = gcnew LoginForm();
+		FormLogin->Show();
+	}
 	private: System::Void button_SignUp_Click(System::Object^ sender, System::EventArgs^ e) {
-
 	}
 };
 }

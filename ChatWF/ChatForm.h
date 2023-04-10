@@ -1,7 +1,13 @@
 #pragma once
 
-namespace ChatWF {
+#include <msclr\marshal.h>
+#include <msclr\marshal_cppstd.h>
+//#include "Game Client.h"
+#include <string>
+#include <iostream>
 
+namespace ChatWF {
+	using namespace msclr::interop;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -15,12 +21,22 @@ namespace ChatWF {
 	public ref class ChatForm : public System::Windows::Forms::Form
 	{
 	public:
+
 		ChatForm(void)
 		{
+
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			
+		}
+
+		void AppendText(Color color, std::string text)
+		{
+			this->richTextBox_Chat->SelectionStart = this->richTextBox_Chat->TextLength;
+			this->richTextBox_Chat->SelectionLength = 0;
+
+			this->richTextBox_Chat->SelectionColor = color;
+			richTextBox_Chat->AppendText(marshal_as<String^>(text));
+			richTextBox_Chat->SelectionColor = richTextBox_Chat->ForeColor;
 		}
 
 	protected:
@@ -261,5 +277,9 @@ namespace ChatWF {
 
 		}
 #pragma endregion
+
+
 };
 }
+
+

@@ -51,6 +51,12 @@ int sendPacketToServer(Packet TxPkt)
         return 0;
     }
 
+    auto now = std::chrono::system_clock::now();
+
+    std::time_t time = std::chrono::system_clock::to_time_t(now);
+
+    TxPkt.set_Timestamp(time);
+
     int Size = 0;
     char* Tx = TxPkt.serializeData(Size);
 

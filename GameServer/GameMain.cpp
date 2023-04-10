@@ -270,10 +270,10 @@ void receivePacket(Packet& pkt, SOCKET clientSocket)
 
     time_t timestamp = pkt.get_Timestamp();
     std::tm* localTime = std::localtime(&timestamp);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", localTime);
+    char buffer2[80];
+    strftime(buffer2, 80, "%Y-%m-%d %H:%M:%S", localTime);
 
-    std::cout << "Username: " << pkt.get_User() << " | " << "Data: " << pkt.get_Data() << " | " << buffer << std::endl;
+    std::cout << "Username: " << pkt.get_User() << " | " << "Data: " << pkt.get_Data() << " | " << buffer2 << std::endl;
 }
 
 void sendJudge(SOCKET clientSocket)

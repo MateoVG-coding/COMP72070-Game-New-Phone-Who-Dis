@@ -12,8 +12,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTets_GameServer", "Unit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_Client", "UnitTest_Client\UnitTest_Client.vcxproj", "{B964078A-4701-4B0C-A66F-15E2A4D3F5A0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoginWF", "LoginWF\LoginWF.vcxproj", "{7A815A1C-FB3C-493B-82E7-58EECB458C3F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SignupWF", "SignupWF\SignupWF.vcxproj", "{BCEB7FB5-663F-4A6A-8705-FD8FACCEFB3B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatWF", "ChatWF\ChatWF.vcxproj", "{1F84D6D5-1F1F-43D5-95F5-9164CE17F3B1}"
@@ -21,6 +19,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_LoginServer", "UnitTest_LoginServer\UnitTest_LoginServer.vcxproj", "{F82A736B-5385-4A84-AF8B-FA3EBB09F63E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JudgeWF", "JudgeWF\JudgeWF.vcxproj", "{6BAF548A-38BC-4EF3-978F-F49B859BAE70}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "LoginWindowsForm\LoginWindowsForm.vcxproj", "{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,14 +70,6 @@ Global
 		{B964078A-4701-4B0C-A66F-15E2A4D3F5A0}.Release|x64.Build.0 = Release|x64
 		{B964078A-4701-4B0C-A66F-15E2A4D3F5A0}.Release|x86.ActiveCfg = Release|Win32
 		{B964078A-4701-4B0C-A66F-15E2A4D3F5A0}.Release|x86.Build.0 = Release|Win32
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Debug|x64.ActiveCfg = Debug|x64
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Debug|x64.Build.0 = Debug|x64
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Debug|x86.ActiveCfg = Debug|Win32
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Debug|x86.Build.0 = Debug|Win32
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Release|x64.ActiveCfg = Release|x64
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Release|x64.Build.0 = Release|x64
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Release|x86.ActiveCfg = Release|Win32
-		{7A815A1C-FB3C-493B-82E7-58EECB458C3F}.Release|x86.Build.0 = Release|Win32
 		{BCEB7FB5-663F-4A6A-8705-FD8FACCEFB3B}.Debug|x64.ActiveCfg = Debug|x64
 		{BCEB7FB5-663F-4A6A-8705-FD8FACCEFB3B}.Debug|x64.Build.0 = Debug|x64
 		{BCEB7FB5-663F-4A6A-8705-FD8FACCEFB3B}.Debug|x86.ActiveCfg = Debug|Win32
@@ -110,6 +102,14 @@ Global
 		{6BAF548A-38BC-4EF3-978F-F49B859BAE70}.Release|x64.Build.0 = Release|x64
 		{6BAF548A-38BC-4EF3-978F-F49B859BAE70}.Release|x86.ActiveCfg = Release|Win32
 		{6BAF548A-38BC-4EF3-978F-F49B859BAE70}.Release|x86.Build.0 = Release|Win32
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Debug|x64.ActiveCfg = Debug|x64
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Debug|x64.Build.0 = Debug|x64
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Debug|x86.ActiveCfg = Debug|Win32
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Debug|x86.Build.0 = Debug|Win32
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Release|x64.ActiveCfg = Release|x64
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Release|x64.Build.0 = Release|x64
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Release|x86.ActiveCfg = Release|Win32
+		{B03E24E1-5C47-4EB3-A820-D646F11ABDDA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
