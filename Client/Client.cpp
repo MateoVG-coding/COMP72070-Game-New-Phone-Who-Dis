@@ -30,7 +30,7 @@ SOCKET CreateSocket(int port) {
 	return clientSocket;
 }
 
-void sendPackets_Client(Packet pkt, SOCKET clientSocket)
+void sendPackets_Client(Packet &pkt, SOCKET clientSocket)
 {
 	//lock_guard<mutex> lock(mtx);
 	pkt.set_CRC();
@@ -47,6 +47,16 @@ void sendPackets_Client(Packet pkt, SOCKET clientSocket)
 	char* TxBuffer = pkt.serializeData(size);
 
 	send(clientSocket, TxBuffer, size + 1, 0);
+
+	char buffer[128];
+
+	recv(clientSocket, buffer, sizeof(buffer), 0);
+
+	Packet Rxpkt(buffer);
+
+	pkt.set_ErrFlag(Rxpkt.get_ErrFlag());
+
+	pkt.set_AckFlag(Rxpkt.get_AckFlag());
 }
 
 void exitGame(SOCKET clientSocket)
@@ -74,11 +84,14 @@ void sendUser(char* name, SOCKET clientSocket)
 Packet receivePacket(SOCKET clientSocket)
 {
 	char buffer[300];
-	recv(clientSocket, buffer, sizeof(buffer), 0);
+	int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-	Packet pkt(buffer);
+	if (bytesReceived > 0)
+	{
+		Packet pkt(buffer);
 
-	return pkt;
+		return pkt;
+	}
 }
 
 void sendReply(char* name, char* reply, SOCKET clientSocket)

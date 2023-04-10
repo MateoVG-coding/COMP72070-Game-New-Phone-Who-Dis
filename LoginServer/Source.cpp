@@ -60,7 +60,7 @@ int sendPacketToServer(Packet TxPkt)
     int Size = 0;
     char* Tx = TxPkt.serializeData(Size);
 
-    send(clientSocket, Tx, Size, 0);
+    send(clientSocket, Tx, Size + 1, 0);
 
     char RxBuffer[128];
     int bytesReceived = recv(clientSocket, RxBuffer, sizeof(RxBuffer), 0);
@@ -97,13 +97,20 @@ void sendPacketToClient(Packet RxPkt, SOCKET clientSocket)
 
     if (username.find("login") != std::string::npos) //Check if the client wants to login or signup
     {
+
+        string wordL = "login";
+        size_t pos = username.find("login"); //Clean word login
+        if (pos != std::string::npos) {
+            username.erase(pos, wordL.length());
+        }
+
         Packet GameServerPkt;
 
         char username_LoginServer[] = "LOGIN_SERVER";
 
         GameServerPkt.set_Username(username_LoginServer, sizeof(username_LoginServer) / sizeof(username_LoginServer[0]));
 
-        GameServerPkt.set_Data(RxPkt.get_User(), RxPkt.get_UsernameLength());
+        GameServerPkt.set_Data(&username[0], strlen(&username[0]));
 
         if (checkCredentials(username, password, "credentials.txt") && sendPacketToServer(GameServerPkt)) //Login information is correct and the user is not already connected to the server
         {

@@ -125,9 +125,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoginWF.cpp" />
-    <ClCompile Include="SignupWF.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChatWF.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="LoginWF.h">
       <FileType>CppForm</FileType>
     </ClInclude>

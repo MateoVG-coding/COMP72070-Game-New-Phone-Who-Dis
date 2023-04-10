@@ -18,15 +18,15 @@
     <ClCompile Include="LoginWF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SignupWF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoginWF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SignupWF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatWF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

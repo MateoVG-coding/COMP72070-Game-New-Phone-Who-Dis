@@ -1,8 +1,11 @@
 #pragma once
 
-#include "LoginWF.h"
+#include "Game Client.h"
+#include "ChatWF.h"
+#include <msclr/marshal_cppstd.h>
+#include <msclr\marshal_cppstd.h>
 
-namespace GUI{
+namespace SignUp_Form{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -17,12 +20,17 @@ namespace GUI{
 	public ref class SignupForm : public System::Windows::Forms::Form
 	{
 	public:
-		SignupForm(void)
+
+		SOCKET clientSocket;
+		String^ username;
+		Form^ obj;
+		
+		SignupForm(SOCKET clientSocket, System::String^ username, Form^ objLogin)
 		{
+			this->clientSocket = clientSocket;
+			this->username = username;
+			this->obj = objLogin;
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 		}
 
 	protected:
@@ -242,7 +250,7 @@ namespace GUI{
 			this->ClientSize = System::Drawing::Size(1382, 703);
 			this->Controls->Add(this->splitContainer1);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
-			this->Icon = gcnew System::Drawing::Icon("./Resources/sms.ico");
+			this->Icon = gcnew System::Drawing::Icon("../Resources/sms.ico");
 			this->Margin = System::Windows::Forms::Padding(3, 5, 3, 5);
 			this->MaximizeBox = false;
 			this->MaximumSize = System::Drawing::Size(1400, 900);
@@ -260,11 +268,44 @@ namespace GUI{
 		}
 #pragma endregion
 	private: System::Void linkLabel_SignIn_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
-		//this->Hide();
-		//LoginForm^ FormLogin = gcnew LoginForm();
-		//FormLogin->Show();
+
+		this->Hide();
+
+		this->obj->Show();
 	}
 	private: System::Void button_SignUp_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		Packet pkt;
+
+		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);
+		char* username = new char[strU.length() + 1];
+		std::strcpy(username, strU.c_str());
+		int sizeUsername = static_cast<int>(strU.length());
+
+		pkt.set_Username(username, sizeUsername);
+
+		std::string strP = msclr::interop::marshal_as<std::string>(textBox_Password->Text);
+		char* password = new char[strP.length() + 1];
+		std::strcpy(password, strP.c_str());
+		int sizePassword = static_cast<int>(strP.length());
+
+		pkt.set_Data(password, sizePassword);
+
+		delete[] username;
+		delete[] password;
+
+		sendPackets_Client(pkt, clientSocket);
+
+		if (pkt.get_ErrFlag())
+		{
+			MessageBox::Show("You could not connect to the main server. Please, try again later...", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		else
+		{
+			Chat_Form::ChatWF^ chatForm = gcnew Chat_Form::ChatWF();
+			chatForm->Show();
+			this->Hide();
+		}
 	}
 };
 }

@@ -1,13 +1,7 @@
 #pragma once
 
-#include <msclr\marshal.h>
-#include <msclr\marshal_cppstd.h>
-//#include "Game Client.h"
-#include <string>
-#include <iostream>
+namespace Chat_Form {
 
-namespace ChatWF {
-	using namespace msclr::interop;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -16,77 +10,38 @@ namespace ChatWF {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for ChatForm
+	/// Summary for ChatWF
 	/// </summary>
-	public ref class ChatForm : public System::Windows::Forms::Form
+	public ref class ChatWF : public System::Windows::Forms::Form
 	{
 	public:
-
-		ChatForm(void)
+		ChatWF(void)
 		{
-
 			InitializeComponent();
-			
-		}
-
-		void AppendText(Color color, std::string text)
-		{
-			this->richTextBox_Chat->SelectionStart = this->richTextBox_Chat->TextLength;
-			this->richTextBox_Chat->SelectionLength = 0;
-
-			this->richTextBox_Chat->SelectionColor = color;
-			richTextBox_Chat->AppendText(marshal_as<String^>(text));
-			richTextBox_Chat->SelectionColor = richTextBox_Chat->ForeColor;
+			//
+			//TODO: Add the constructor code here
+			//
 		}
 
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~ChatForm()
+		~ChatWF()
 		{
 			if (components)
 			{
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
 	private: System::Windows::Forms::Button^ button_Option4;
-
 	private: System::Windows::Forms::Button^ button_Option1;
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
 	private: System::Windows::Forms::Button^ button_Option3;
-
-
-
 	private: System::Windows::Forms::RichTextBox^ richTextBox_Chat;
 	private: System::Windows::Forms::Button^ button_Option2;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	protected:
 
 	private:
 		/// <summary>
@@ -101,7 +56,7 @@ namespace ChatWF {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ChatForm::typeid));
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ChatWF::typeid));
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->richTextBox_Chat = (gcnew System::Windows::Forms::RichTextBox());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -262,7 +217,7 @@ namespace ChatWF {
 				static_cast<System::Int32>(static_cast<System::Byte>(178)));
 			this->ClientSize = System::Drawing::Size(1382, 753);
 			this->Controls->Add(this->splitContainer1);
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Icon = gcnew System::Drawing::Icon("../Resources/sms.ico");
 			this->Name = L"ChatForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"New Phone, Who Dis\?";
@@ -277,9 +232,5 @@ namespace ChatWF {
 
 		}
 #pragma endregion
-
-
-};
+	};
 }
-
-
