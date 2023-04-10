@@ -17,7 +17,7 @@
 int main();
 void connectionHandler(SOCKET clientSocket);
 void clientHandler(SOCKET clientSocket, char*);
-void serverHandler(SOCKET clientSocket, char*);
+bool serverHandler(SOCKET clientSocket, char*);
 bool receiveAck(SOCKET clientSocket);
 void sendInbox(SOCKET clientSocket);
 int generateJudge(int numClients);

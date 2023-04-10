@@ -16,7 +16,18 @@ void connectionHandler(SOCKET clientSocket) {
 
     if (strcmp(connection.get_User(), "LOGIN_SERVER") == 0)
     {
-        serverHandler(clientSocket, RxBuffer_check);
+        if (serverHandler(clientSocket, RxBuffer_check) == false)
+        {
+            Packet user(RxBuffer_check);
+            char empty[2];
+            strcpy(empty, "");
+
+            user.set_Username(user.get_Data(), user.get_DataLength());
+            user.set_UsernameLength(user.get_DataLength());
+            user.set_Data(empty, strlen(empty));
+            user.set_DataLength(strlen(empty));
+            addClient(user);
+        }
     }
     else
         clientHandler(clientSocket, RxBuffer_check);
@@ -43,7 +54,7 @@ int generateJudge(int numClients)
     }
 }
 
-void serverHandler(SOCKET clientSocket, char* buffer)
+bool serverHandler(SOCKET clientSocket, char* buffer)
 {
     Packet user(buffer);
     Packet response;
@@ -60,6 +71,8 @@ void serverHandler(SOCKET clientSocket, char* buffer)
     }
 
     closesocket(clientSocket);
+
+    return response.get_ErrFlag();
 }
 
 void handleConfirmation(SOCKET clientSocket)
@@ -166,7 +179,6 @@ void clientHandler(SOCKET clientSocket, char* buffer)
 
     Packet user(buffer);
     user.set_SeqNumber(numClients);
-    addClient(user);
 
     while (numClients < 3)
     {
@@ -255,6 +267,13 @@ void receivePacket(Packet& pkt, SOCKET clientSocket)
     recv(clientSocket, buffer, sizeof(buffer), 0);
 
     pkt = Packet(buffer);
+
+    time_t timestamp = pkt.get_Timestamp();
+    std::tm* localTime = std::localtime(&timestamp);
+    char buffer[80];
+    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", localTime);
+
+    std::cout << "Username: " << pkt.get_User() << " | " << "Data: " << pkt.get_Data() << " | " << buffer << std::endl;
 }
 
 void sendJudge(SOCKET clientSocket)
