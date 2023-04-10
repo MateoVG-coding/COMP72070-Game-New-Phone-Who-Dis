@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Client/Packet.h"
 #include "../GameServer/GameServer.h"
 #include "LoginWF.h"
 

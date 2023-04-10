@@ -281,6 +281,8 @@ namespace SignUp_Form{
 			return;
 		}
 
+		username = textBox_Username->Text;
+
 		Packet pkt;
 
 		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);

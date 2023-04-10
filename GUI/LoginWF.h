@@ -2,7 +2,7 @@
 
 #include "../Client/Game Client.h"
 #include "SignupWF.h"
-
+#include "ChatWF.h"
 #include <msclr/marshal_cppstd.h>
 #include <msclr\marshal_cppstd.h>
 
