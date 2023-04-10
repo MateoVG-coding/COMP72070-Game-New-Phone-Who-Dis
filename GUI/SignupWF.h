@@ -276,6 +276,11 @@ namespace SignUp_Form{
 	}
 	private: System::Void button_SignUp_Click(System::Object^ sender, System::EventArgs^ e) {
 
+		if (textBox_Password->Text != textBox_RePassword->Text) {
+			MessageBox::Show("Passwords do not match. Please try again.");
+			return;
+		}
+
 		Packet pkt;
 
 		std::string strU = msclr::interop::marshal_as<std::string>(textBox_Username->Text);

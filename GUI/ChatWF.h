@@ -114,6 +114,7 @@ namespace Chat_Form {
 			// 
 			// button_Leave
 			// 
+			this->button_Leave->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 			this->button_Leave->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(108)),
 				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->button_Leave->Cursor = System::Windows::Forms::Cursors::Hand;
@@ -127,6 +128,7 @@ namespace Chat_Form {
 			// 
 			// button_Ready
 			// 
+			this->button_Ready->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button_Ready->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(108)),
 				static_cast<System::Int32>(static_cast<System::Byte>(148)));
 			this->button_Ready->Cursor = System::Windows::Forms::Cursors::Hand;
@@ -264,7 +266,7 @@ namespace Chat_Form {
 				static_cast<System::Int32>(static_cast<System::Byte>(178)));
 			this->ClientSize = System::Drawing::Size(1382, 753);
 			this->Controls->Add(this->splitContainer1);
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Icon = gcnew System::Drawing::Icon("../Resources/sms.ico");
 			this->Name = L"ChatWF";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"New Phone, Who Dis\?";
